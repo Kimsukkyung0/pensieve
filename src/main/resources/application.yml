@@ -5,7 +5,7 @@ spring:
       max-request-size: 12MB
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:mariadb://localhost:3306/hi_school
+    url: jdbc:postgresql://localhost:3306/hi_school
     username: root
     password: green502
   jpa:

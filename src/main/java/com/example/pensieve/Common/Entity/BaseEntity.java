@@ -2,6 +2,7 @@ package com.example.pensieve.Common.Entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.EntityListeners;
+import jakarta.persistence.MappedSuperclass;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
@@ -15,6 +16,7 @@ import java.time.LocalDateTime;
 @EntityListeners(AuditingEntityListener.class)
 @SuperBuilder
 @NoArgsConstructor
+@MappedSuperclass
 public class BaseEntity {
     @CreatedDate
     @Column(updatable = false, nullable = false)
