@@ -10,7 +10,7 @@ import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.ColumnDefault;
 
 @Entity
-@Table(name="postbox")
+@Table(name="post_box")
 @Data
 @SuperBuilder
 @NoArgsConstructor
@@ -22,8 +22,8 @@ public class PostBoxEntity extends BaseEntity{
     @Column(updatable = false, nullable = false, columnDefinition = "BIGINT UNSIGNED")
     private Long postId;
 
-    @OneToOne(mappedBy = "PostBoxEntity")
-    @JoinColumn(name = "user_id", nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "user_id")
     private UserEntity userEntity;
 
     @Column(nullable = false, columnDefinition = "char(1)")
@@ -33,6 +33,7 @@ public class PostBoxEntity extends BaseEntity{
     @Column(nullable = false, columnDefinition = "BIGINT UNSIGNED")
     @ColumnDefault(value = "0")
     private Long hits;
+    //조회수
 
     @Column(length = 100)
     @Size(min = 5,max = 100)

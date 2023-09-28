@@ -11,7 +11,7 @@ import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.ColumnDefault;
 
 @Entity
-@Table(name="user")
+@Table(name="p_user")
 @Data
 @SuperBuilder
 @NoArgsConstructor
