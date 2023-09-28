@@ -3,10 +3,18 @@ package com.example.pensieve.Common.Entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.ColumnDefault;
 
 @Entity
-
+@Table(name="postbox")
+@Data
+@SuperBuilder
+@NoArgsConstructor
+@ToString(callSuper = true)
 public class PostBoxEntity extends BaseEntity{
 
     @Id

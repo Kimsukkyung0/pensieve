@@ -1,5 +1,7 @@
 package com.example.pensieve.Common;
 
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -17,6 +19,9 @@ public class postgresSqlRunner implements ApplicationRunner {
 
     @Autowired
     JdbcTemplate jdbcTemplate;
+
+    @PersistenceContext
+    EntityManager em;
 
     @Override
     public void run(ApplicationArguments args) throws Exception {

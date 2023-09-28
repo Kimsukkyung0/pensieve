@@ -1,12 +1,8 @@
 spring:
-  servlet:
-    multipart:
-      max-file-size: 3MB
-      max-request-size: 12MB
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:3306/hi_school
-    username: root
+    url: jdbc:postgresql://localhost:5432/databasetest
+    username: postgres
     password: green502
   jpa:
     hibernate:
@@ -15,9 +11,6 @@ spring:
     properties:
       hibernate:
         format_sql: true
-mybatis:
-  type-aliases-package: com.green.secondproject
-  mapper-locations: classpath:mapper/**/*.xml
 # swagger
 springdoc:
   swagger-ui:
