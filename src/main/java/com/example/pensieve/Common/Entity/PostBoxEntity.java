@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.annotations.Check;
 import org.hibernate.annotations.ColumnDefault;
 
 @Entity
@@ -19,8 +20,17 @@ public class PostBoxEntity extends BaseEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(updatable = false, nullable = false, columnDefinition = "BIGINT UNSIGNED")
+    @Column(updatable = false, nullable = false)
     private Long postId;
+
+    public void setPostId(Long postId){
+        this.postId = postId;
+    }
+
+    @Check(constraints = "postId>0")
+    public Long getPostId(){
+        return postId;
+    }
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -30,7 +40,7 @@ public class PostBoxEntity extends BaseEntity{
     private Integer banYn;
     //삭제여부
 
-    @Column(nullable = false, columnDefinition = "BIGINT UNSIGNED")
+    @Column(nullable = false)
     @ColumnDefault(value = "0")
     private Long hits;
     //조회수

@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.annotations.Check;
 import org.hibernate.annotations.ColumnDefault;
 
 @Entity
@@ -19,8 +20,18 @@ import org.hibernate.annotations.ColumnDefault;
 public class UserEntity extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(updatable = false, nullable = false, columnDefinition = "BINGINT UNSIGNED")
+    @Column(updatable = false, nullable = false)
     private Long userId;
+
+    public void setAdminId(Long adminId){
+        this.userId = userId;
+    }
+
+    @Check(constraints = "adminId>0")
+    public Long getUserId(){
+        return userId;
+    }
+
 
     @Column(nullable = false, length = 50, unique = true)
     @Size(min = 5, max = 50)
