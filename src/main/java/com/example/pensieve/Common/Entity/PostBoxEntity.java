@@ -22,21 +22,17 @@ public class PostBoxEntity extends BaseEntity{
     @Column(updatable = false, nullable = false, columnDefinition = "BIGINT UNSIGNED")
     private Long postId;
 
-    @OneToOne
-    @JoinColumn(name = "userId", nullable = false)
+    @OneToOne(mappedBy = "PostBoxEntity")
+    @JoinColumn(name = "user_id", nullable = false)
     private UserEntity userEntity;
 
     @Column(nullable = false, columnDefinition = "char(1)")
-    private int banYn;
+    private Integer banYn;
     //삭제여부
 
     @Column(nullable = false, columnDefinition = "BIGINT UNSIGNED")
     @ColumnDefault(value = "0")
     private Long hits;
-
-    @Column(nullable = false, columnDefinition = "BIGINT UNSIGNED")
-    @ColumnDefault(value = "0")
-    private Long likes;
 
     @Column(length = 100)
     @Size(min = 5,max = 100)
