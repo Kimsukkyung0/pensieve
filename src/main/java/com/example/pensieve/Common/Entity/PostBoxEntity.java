@@ -45,6 +45,11 @@ public class PostBoxEntity extends BaseEntity{
     private Long hits;
     //조회수
 
+    @Column(nullable = false)
+    @ColumnDefault(value = "0")
+    private Long likes;
+
+
     @Column(length = 100)
     @Size(min = 5,max = 100)
     private String ctnt;
