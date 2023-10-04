@@ -1,4 +1,4 @@
-package com.example.pensieve.Common.Repository;
+package com.example.pensieve.common.repository;
 
 public interface UserRepository <UserEntity, Long>{
 }

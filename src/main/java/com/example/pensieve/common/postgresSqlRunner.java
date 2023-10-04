@@ -1,4 +1,4 @@
-package com.example.pensieve.Common;
+package com.example.pensieve.common;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -10,7 +10,6 @@ import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
-import java.sql.Statement;
 
 @Component
 public class postgresSqlRunner implements ApplicationRunner {

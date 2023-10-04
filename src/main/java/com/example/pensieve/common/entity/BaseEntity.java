@@ -1,4 +1,4 @@
-package com.example.pensieve.Common.Entity;
+package com.example.pensieve.common.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.EntityListeners;

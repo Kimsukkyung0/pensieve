@@ -1,4 +1,4 @@
-package com.example.pensieve.Common.Entity;
+package com.example.pensieve.common.entity;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;

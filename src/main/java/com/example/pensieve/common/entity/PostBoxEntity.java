@@ -1,7 +1,6 @@
-package com.example.pensieve.Common.Entity;
+package com.example.pensieve.common.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 import lombok.NoArgsConstructor;
