@@ -1,11 +1,13 @@
 package com.example.pensieve.common.config;
 
+import lombok.AllArgsConstructor;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 //import org.springframework.data.redis.core.StringRedisTemplate;
 import java.util.concurrent.TimeUnit;
 
 @Service
+@AllArgsConstructor
 public class RedisService {
     private final StringRedisTemplate strRedisTemplate;
 
