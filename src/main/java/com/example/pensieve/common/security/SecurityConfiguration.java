@@ -47,4 +47,11 @@ public class SecurityConfiguration {
     MvcRequestMatcher.Builder mvc(HandlerMappingIntrospector introspector) {
         return new MvcRequestMatcher.Builder(introspector);
     }
+
+    @Bean(name = "mvcHandlerMappingIntrospector")
+    public HandlerMappingIntrospector mvcHandlerMappingIntrospector(){
+        return new HandlerMappingIntrospector();
+    }
+    //스프링 시큐리티는 root 컨텍스트에서 초기화 되고 mvc는 자식 컨텍스트에서 초기화 되므로 스프링 시큐리티가 자식놈인 mvc를 알 수 있는 방법이 없다.
+    // 그래서 중간다리 역할을 해주는 HandlerMappingIntrospector 라는 역할이 필요하다.
 }
