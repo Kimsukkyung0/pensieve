@@ -1,4 +1,4 @@
-package com.example.pensieve.common;
+package com.example.pensieve.common.config;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;

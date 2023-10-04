@@ -1,4 +1,4 @@
-package com.example.pensieve.common;
+package com.example.pensieve.common.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;

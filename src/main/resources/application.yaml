@@ -1,3 +1,9 @@
+springboot:
+  jwt:
+    access-secret: Pen1sie2vePersonalProject1Kim2suk0Kyung3lOvEs4yOUAll0987
+    refresh-secret: dOYou1wAnTtOReFreShYoUR0ToKeN312
+    header-scheme-name: Authorization
+    token-type: Bearer
 spring:
   datasource:
     driver-class-name: org.postgresql.Driver
