@@ -11,6 +11,7 @@ public class MyUserDetails implements UserDetails {
     private Long userId;
     private String email;
     private String pw;
+    private String nickNm;
 
 
     @Override
@@ -27,7 +28,7 @@ public class MyUserDetails implements UserDetails {
 
     @Override
     public String getUsername(){
-
+        return getNickNm();
     }
 
     @Override
