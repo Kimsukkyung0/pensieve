@@ -1,5 +1,6 @@
 package com.example.pensieve.common.security;
 
+import lombok.AllArgsConstructor;
 import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -10,6 +11,7 @@ import java.util.List;
 
 @Component
 @Slf4j
+@AllArgsConstructor
 public class JwtTokenProvider {
     public final Key ACCESS_KEY;
     public final Key REFRESH_KEY;
@@ -22,7 +24,7 @@ public class JwtTokenProvider {
         Date now = new Date();
         return null;
     }
-    
+
     public JwtTokenProvider(@Value("${springboot.jwt.access-secret}") String accessSecretKey){
 
     }
