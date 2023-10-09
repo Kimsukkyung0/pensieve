@@ -2,6 +2,7 @@ package com.example.pensieve.common.security;
 
 import com.example.pensieve.common.config.RedisService;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
@@ -14,7 +15,7 @@ import org.springframework.security.web.servlet.util.matcher.MvcRequestMatcher;
 import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 
 @Configuration
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class SecurityConfiguration {
     private final JwtTokenProvider jwtTokenProvider;
     private final RedisService redis;
@@ -47,10 +48,10 @@ public class SecurityConfiguration {
         return new MvcRequestMatcher.Builder(introspector);
     }
 
-    @Bean(name = "mvcHandlerMappingIntrospector")
-    public HandlerMappingIntrospector mvcHandlerMappingIntrospector(){
-        return new HandlerMappingIntrospector();
-    }
+//    @Bean
+//    public HandlerMappingIntrospector mvcHandlerMappingIntrospector(){
+//        return new HandlerMappingIntrospector();
+//    }
     //스프링 시큐리티는 root 컨텍스트에서 초기화 되고 mvc는 자식 컨텍스트에서 초기화 되므로 스프링 시큐리티가 자식놈인 mvc를 알 수 있는 방법이 없다.
     // 그래서 중간다리 역할을 해주는 HandlerMappingIntrospector 라는 역할이 필요하다.
 }
