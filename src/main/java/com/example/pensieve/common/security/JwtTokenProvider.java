@@ -1,14 +1,21 @@
 package com.example.pensieve.common.security;
 
+import com.example.pensieve.common.entity.UserEntity;
 import com.example.pensieve.common.repository.ServiceAdminRepository;
 import com.example.pensieve.common.repository.UserRepository;
+import com.example.pensieve.common.security.model.MyUserInfos;
+import com.example.pensieve.common.security.model.Response;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import java.security.Key;
@@ -25,8 +32,6 @@ public class JwtTokenProvider {
     public final long REFRESH_TOKEN_VALID_MS = 1_296_000_000L; //15일 정도
     private final UserRepository usrRep;
     private final ServiceAdminRepository adminRep;
-
-
 
     public JwtTokenProvider(@Value("${springboot.jwt.access-secret}") String accessSecretKey
             , @Value("${springboot.jwt.refresh-secret}") String refreshSecretKey
@@ -70,5 +75,56 @@ public class JwtTokenProvider {
     }
 
     //Constructor of this class
+
+    //--------------------------------------------------------------------------복붙
+    public Authentication getAuthentication (String token) {
+        log.info("JwtTokenProvider - getAuthentication: 토큰 인증 정보 조회 시작");
+        //UserDetails userDetails = SERVICE.loadUserByUsername(getUsername(token));
+        UserDetails userDetails = getUserDetailsFromToken(token, ACCESS_KEY);
+        log.info("JwtTokenProvider - getAuthentication: 토큰 인증 정보 조회 완료, UserDetails UserName : {}"
+                , userDetails.getUsername());
+        return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
+    }
+
+    private UserDetails getUserDetailsFromToken(String token, Key key) {
+        Claims claims = getClaims(token, key);
+        String strIuser = claims.getSubject();
+        Long id = Long.valueOf(strIuser);
+        List<String> roles = (List<String>)claims.get("roles");
+
+        UserEntity user = usrRep.findById(Long.valueOf(strIuser)).get();
+
+        return MyUserInfos.builder()
+                .userId(user.getUserId())
+                .email(user.getEmail())
+                .pw(user.getPw())
+                .nickNm(user.getNickNm())
+                .build();
+    }
+
+    private Claims getClaims(String token, Key key){
+        return Jwts.parserBuilder().setSigningKey(key)
+                .build().parseClaimsJws(token)
+                .getBody();
+    }
+
+    public boolean isValidateToken(String token, Key key) {
+        log.info("JwtTokenProvider - isValidateToken: 토큰 유효 체크 시작");
+        try {
+            return !getClaims(token, key).getExpiration().before(new Date()); //현재 시간보다 만료 전 > true
+        } catch (Exception e) {
+            log.info("JwtTokenProvider - isValidateToken: 토큰 유효 체크 예외 발생");
+            return false;
+        }
+    }
+
+    public Long getTokenExpirationTime(String accessToken, Key accessKey) {
+        try {
+            return getClaims(accessToken, accessKey).getExpiration().getTime();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0L;
+    }
 
 }
