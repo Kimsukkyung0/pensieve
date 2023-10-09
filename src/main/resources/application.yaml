@@ -1,7 +1,7 @@
 springboot:
   jwt:
-    access-secret: Pen1sie2vePersonalProject1Kim2suk0Kyung3lOvEs4yOUAll0987
-    refresh-secret: dOYou1wAnTtOReFreShYoUR0ToKeN312
+    access-secret: Pen1sie2vePersonalProject1Kim2suk0Kyung3lOvEs4yOUAll0977l
+    refresh-secret: dOYou1wAnTtOReFreShYoUR0ToKeN312Kim2suk0Kyung3lOvEs4yOUAll0987
     header-scheme-name: authorization
     token-type: Bearer
 spring:
@@ -10,7 +10,6 @@ spring:
     url: jdbc:postgresql://localhost:5432/databasetest
     username: postgres
     password: green502
-
   neo4j:
     authentication:
       username: neo4j
@@ -25,6 +24,6 @@ spring:
         format_sql: true
 
 # swagger
-springdoc:
-  swagger-ui:
-    path: /swagger.html
+#springdoc:
+#  swagger-ui:
+#    path: /swagger.html

@@ -3,7 +3,6 @@ package com.example.pensieve.common.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Size;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -34,7 +33,7 @@ public class UserEntity extends BaseEntity{
 
 
     @Column(nullable = false, length = 50, unique = true)
-    @Size(min = 5, max = 50)
+//    @Size(min = 5, max = 50)
     private String email;
     //unique
 
@@ -44,7 +43,7 @@ public class UserEntity extends BaseEntity{
     //size 제약 추가할것
 
     @Column(nullable = false, length = 10, unique = true)
-    @Size(min = 2, max = 10)
+//    @Size(min = 2, max = 10)
     private String nickNm;
 
     @Column(nullable = false, length = 1)
