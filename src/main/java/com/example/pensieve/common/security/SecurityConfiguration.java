@@ -32,12 +32,11 @@ public class SecurityConfiguration {
                 ) //사용 권한 체크
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) //세션 사용 X
                 .httpBasic(http -> http.disable()) //UI 있는 시큐리티 설정을 비활성화
-                .csrf(csrf -> csrf.disable()); //CSRF 보안이 필요 X, 쿠키와 세션을 이용해서 인증을 하고 있기 때문에 발생하는 일, https://kchanguk.tistory.com/197
-//                .exceptionHandling(except -> {
-//                    except.accessDeniedHandler(new CustomAccessDeniedHandler());
-//                    except.authenticationEntryPoint(new CustomAuthenticationEntryPoint());
-//                })
-//                .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider, service), UsernamePasswordAuthenticationFilter.class);
+                .csrf(csrf -> csrf.disable()) //CSRF 보안이 필요 X, 쿠키와 세션을 이용해서 인증을 하고 있기 때문에 발생하는 일, https://kchanguk.tistory.com/197
+                .exceptionHandling(except -> {
+                    except.accessDeniedHandler(new CustomAccessDeniedHandler());
+                    except.authenticationEntryPoint(new MyAuthenticationEntryPoint());
+                }).addFilterBefore(new JwtAuthFilter(jwtTokenProvider, redis), UsernamePasswordAuthenticationFilter.class);
 
         return httpSecurity.build();
 
