@@ -27,8 +27,8 @@ public class SignController {
     * */
 
     @PostMapping(value = "/sign-up")
-    public int signUp(@RequestBody SignInDto dto){
-        return SIGNSERVICE.
+    public void signUp(@RequestBody SignInDto dto){
+        SIGNSERVICE.signUp(dto);
     }
 
 }
