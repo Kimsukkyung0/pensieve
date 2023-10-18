@@ -5,6 +5,9 @@ springboot:
     header-scheme-name: authorization
     token-type: Bearer
 spring:
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
   datasource:
     driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://localhost:5432/databasetest
@@ -22,7 +25,8 @@ spring:
     properties:
       hibernate:
         format_sql: true
-
+server:
+  port: 8085
 # swagger
 #springdoc:
 #  swagger-ui:

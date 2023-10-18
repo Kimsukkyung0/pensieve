@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 @Slf4j
 @AllArgsConstructor
 public class SignService {
-    private final PasswordEncoder PW_ENCODER;
+//    private final PasswordEncoder PW_ENCODER;
     private final RedisService redisService;
     private final UserRepository userRepository;
 
