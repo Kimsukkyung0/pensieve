@@ -5,9 +5,9 @@ springboot:
     header-scheme-name: authorization
     token-type: Bearer
 spring:
-  mvc:
-    pathmatch:
-      matching-strategy: ant_path_matcher
+#  mvc:
+#    pathmatch:
+#      matching-strategy: ant_path_matcher
   datasource:
     driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://localhost:5432/databasetest
@@ -28,19 +28,19 @@ spring:
 server:
   port: 8085
 
-springdoc:
-  swagger-ui:
-    path: /swagger-ui.html
-    operationsSorter: method
-    disable-swagger-default-url: true
-    display-request-duration: true
-  api-docs:
-    path: /api-docs
-  show-actuator: true
-  default-consumes-media-type: application/json
-  default-produces-media-type: application/json
-  paths-to-match: /**
-# swagger
 #springdoc:
 #  swagger-ui:
-#    path: /swagger.html
+#    path: /swagger-ui.html
+#    operationsSorter: method
+#    disable-swagger-default-url: true
+#    display-request-duration: true
+#  api-docs:
+#    path: /api-docs
+#  show-actuator: true
+#  default-consumes-media-type: application/json
+#  default-produces-media-type: application/json
+#  paths-to-match: /**
+# swagger
+springdoc:
+  swagger-ui:
+    path: /swagger.html

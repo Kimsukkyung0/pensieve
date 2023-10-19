@@ -2,6 +2,7 @@ package com.example.pensieve.common.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
@@ -13,6 +14,7 @@ import org.hibernate.annotations.ColumnDefault;
 @Data
 @SuperBuilder
 @NoArgsConstructor
+@EqualsAndHashCode(callSuper=false)
 @ToString(callSuper = true)
 public class PostBoxEntity extends BaseEntity{
 
