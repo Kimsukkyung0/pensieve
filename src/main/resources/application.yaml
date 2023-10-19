@@ -34,8 +34,7 @@ server:
 #    operationsSorter: method
 #    disable-swagger-default-url: true
 #    display-request-duration: true
-#  api-docs:
-#    path: /api-docs
+
 #  show-actuator: true
 #  default-consumes-media-type: application/json
 #  default-produces-media-type: application/json
@@ -44,3 +43,6 @@ server:
 springdoc:
   swagger-ui:
     path: /swagger.html
+  api-docs:
+    path: /api-docs
+
