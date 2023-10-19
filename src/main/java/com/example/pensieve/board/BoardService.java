@@ -19,6 +19,6 @@ public class BoardService {
         UserEntity userEntity = usrRep.findById(dto.getUserId()).get();
         PostBoxEntity entity = PostBoxEntity.builder().userEntity(userEntity).ctnt(dto.getCtnt()).build();
         postRep.save(entity);
-        return 1;
+        return entity.getPostId().intValue();
     }
 }

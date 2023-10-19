@@ -23,8 +23,6 @@ public class BoardController {
         else{
             return 0;
         }
-
-
     }
 
 }

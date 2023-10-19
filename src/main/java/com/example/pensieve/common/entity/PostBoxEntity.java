@@ -34,9 +34,10 @@ public class PostBoxEntity extends BaseEntity{
     @JoinColumn(name = "user_id")
     private UserEntity userEntity;
 
-    @Column(nullable = false, columnDefinition = "char(1)")
+    @Column(nullable = false)
+    @ColumnDefault(value = "0")
     private Integer banYn;
-    //삭제여부
+    //삭제여부 : 0=삭제안됨 1=삭제됨
 
     @Column(nullable = false)
     @ColumnDefault(value = "0")
