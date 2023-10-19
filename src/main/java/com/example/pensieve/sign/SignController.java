@@ -1,6 +1,7 @@
 package com.example.pensieve.sign;
 
 import com.example.pensieve.sign.model.SignInDto;
+import com.example.pensieve.sign.model.SignUpResultDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,8 +28,9 @@ public class SignController {
     * */
 
     @PostMapping(value = "/sign-up")
-    public void signUp(@RequestBody SignInDto dto){
-        SIGNSERVICE.signUp(dto);
+    public SignUpResultDto signUp(@RequestBody SignInDto dto){
+
+        return SIGNSERVICE.signUp(dto);
     }
 
 }
