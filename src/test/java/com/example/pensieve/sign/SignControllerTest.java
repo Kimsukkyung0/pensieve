@@ -11,11 +11,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithAnonymousUser;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.BDDMockito.given;
+//import static org.junit.jupiter.api.Assertions.*;
+//import static org.mockito.ArgumentMatchers.any;
+//import static org.mockito.BDDMockito.given;
+//import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verify;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -33,6 +36,7 @@ class SignControllerTest {
 
     @Test
     @DisplayName("회원가입test")
+    @WithMockUser
     void signUp() throws Exception{
         SignInDto dt = SignInDto.builder().email("smk93021@gmail.com").pw("testpw").nickNm("g").build();
         SignUpResultDto resultDto = new SignUpResultDto();
@@ -40,17 +44,19 @@ class SignControllerTest {
         om.registerModule(new JavaTimeModule());
         om.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
 
+        String reqJson = om.writeValueAsString(dt);
         String resJson = om.writeValueAsString(resultDto);
         mvc.perform(post("/api/sign-up")
-                .content(String.valueOf(dt))
+                .content(reqJson)
                 .contentType(MediaType.APPLICATION_JSON)
                 .characterEncoding("UTF-8")
                 .accept(MediaType.APPLICATION_JSON)
+                .with(csrf())
         )
                 .andDo(print())
                 .andExpect(content().encoding("UTF-8"))
-                .andExpect(status().isCreated());
-//        verify(service).signUp(dt);
+                .andExpect(status().isOk());
+        verify(service).signUp(dt);
     }
 
 

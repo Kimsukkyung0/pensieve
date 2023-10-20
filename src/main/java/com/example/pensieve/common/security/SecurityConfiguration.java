@@ -28,8 +28,8 @@ public class SecurityConfiguration {
                                         mvc.pattern("/api/**"),
                                         mvc.pattern("**exception**"),
                                         mvc.pattern(HttpMethod.POST, "/api/refresh-token"),
-                                        mvc.pattern(HttpMethod.POST, "/api/admin/refresh-token"),
-                                        mvc.pattern(HttpMethod.POST, "/api/sign-up")
+                                        mvc.pattern(HttpMethod.POST, "/api/admin/refresh-token")
+//                                        mvc.pattern(HttpMethod.POST, "/api/sign-up")1
                                 ).permitAll()
                                 .anyRequest().permitAll()
                 ) //사용 권한 체크
