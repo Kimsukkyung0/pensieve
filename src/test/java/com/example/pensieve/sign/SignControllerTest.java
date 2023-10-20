@@ -1,6 +1,6 @@
 package com.example.pensieve.sign;
 
-import com.example.pensieve.sign.model.SignInDto;
+import com.example.pensieve.sign.model.SignupDto;
 import com.example.pensieve.sign.model.SignUpResultDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.security.test.context.support.WithAnonymousUser;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -38,7 +37,7 @@ class SignControllerTest {
     @DisplayName("회원가입test")
     @WithMockUser
     void signUp() throws Exception{
-        SignInDto dt = SignInDto.builder().email("smk93021@gmail.com").pw("testpw").nickNm("g").build();
+        SignupDto dt = SignupDto.builder().email("smk93021@gmail.com").pw("testpw").nickNm("g").build();
         SignUpResultDto resultDto = new SignUpResultDto();
         ObjectMapper om = new ObjectMapper();
         om.registerModule(new JavaTimeModule());

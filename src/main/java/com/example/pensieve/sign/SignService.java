@@ -4,7 +4,7 @@ import com.example.pensieve.common.config.RedisService;
 import com.example.pensieve.common.entity.UserEntity;
 import com.example.pensieve.common.repository.UserRepository;
 import com.example.pensieve.common.utils.ResultUtils;
-import com.example.pensieve.sign.model.SignInDto;
+import com.example.pensieve.sign.model.SignupDto;
 import com.example.pensieve.sign.model.SignUpResultDto;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,7 +22,7 @@ public class SignService {
     private final UserRepository userRepository;
 
 
-    public SignUpResultDto signUp(SignInDto dto){
+    public SignUpResultDto signUp(SignupDto dto){
         Optional<UserEntity> uEntity = userRepository.findEmailOverwrittenedYn(dto.getEmail());
         SignUpResultDto result = new SignUpResultDto();
 
