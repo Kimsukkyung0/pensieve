@@ -5,7 +5,7 @@ springboot:
     header-scheme-name: authorization
     token-type: Bearer
 spring:
-#  mvc:
+  #  mvc:
 #    pathmatch:
 #      matching-strategy: ant_path_matcher
   datasource:
@@ -27,6 +27,11 @@ spring:
         format_sql: true
 server:
   port: 8085
+  servlet:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
 
 #springdoc:
 #  swagger-ui:

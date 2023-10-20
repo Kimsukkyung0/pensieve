@@ -25,9 +25,11 @@ public class SecurityConfiguration {
                         authz.requestMatchers(
                                         mvc.pattern("/swagger.html"), mvc.pattern("/swagger-ui/**"), mvc.pattern("/v3/api-docs/**"),
                                         mvc.pattern("/index.html"), mvc.pattern("/"), mvc.pattern("/static/**"),
+                                        mvc.pattern("/api/**"),
                                         mvc.pattern("**exception**"),
                                         mvc.pattern(HttpMethod.POST, "/api/refresh-token"),
-                                        mvc.pattern(HttpMethod.POST, "/api/admin/refresh-token")
+                                        mvc.pattern(HttpMethod.POST, "/api/admin/refresh-token"),
+                                        mvc.pattern(HttpMethod.POST, "/api/sign-up")
                                 ).permitAll()
                                 .anyRequest().permitAll()
                 ) //사용 권한 체크
