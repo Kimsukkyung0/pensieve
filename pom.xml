@@ -106,28 +106,22 @@
             <scope>provided</scope> <!-- provided 스코프로 설정하여 컴파일 시에만 필요하고 런타임에는 서블릿 컨테이너에서 제공되는 것을 사용합니다. -->
         </dependency>
 
-        <dependency> <!-- swagger dependency -->
-            <groupId>org.springdoc</groupId>
-            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
-            <version>2.2.0</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springdoc</groupId>
-            <artifactId>springdoc-openapi-starter-webmvc-api</artifactId>
-            <version>2.2.0</version>
-            <scope>test</scope>
-        </dependency>
+<!--        <dependency> &lt;!&ndash; swagger dependency &ndash;&gt;-->
+<!--            <groupId>org.springdoc</groupId>-->
+<!--            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>-->
+<!--            <version>2.2.0</version>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>org.springdoc</groupId>-->
+<!--            <artifactId>springdoc-openapi-starter-webmvc-api</artifactId>-->
+<!--            <version>2.2.0</version>-->
+<!--            <scope>test</scope>-->
+<!--        </dependency>-->
         <dependency>
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-ui</artifactId>
             <version>1.6.9</version>
         </dependency>
-        <dependency>
-            <groupId>org.springdoc</groupId>
-            <artifactId>springdoc-openapi-common</artifactId>
-            <version>1.6.9</version>
-        </dependency>
-
     </dependencies>
 
     <build>
