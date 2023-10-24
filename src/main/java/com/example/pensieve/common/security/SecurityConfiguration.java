@@ -12,6 +12,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.servlet.util.matcher.MvcRequestMatcher;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 
 @Configuration
@@ -23,13 +24,14 @@ public class SecurityConfiguration {
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity, MvcRequestMatcher.Builder mvc) throws Exception{
         httpSecurity.authorizeHttpRequests(authz ->
                         authz.requestMatchers(
-                                        mvc.pattern("/swagger.html"), mvc.pattern("/swagger-ui/**"), mvc.pattern("/v3/api-docs/**"),
+                                        mvc.pattern("/swagger.html"), mvc.pattern("/swagger-ui/**"),
                                         mvc.pattern("/index.html"), mvc.pattern("/"), mvc.pattern("/static/**"),
                                         mvc.pattern("/api/**"),
                                         mvc.pattern("**exception**"),
                                         mvc.pattern(HttpMethod.POST, "/api/refresh-token"),
-                                        mvc.pattern(HttpMethod.POST, "/api/admin/refresh-token")
-//                                        mvc.pattern(HttpMethod.POST, "/api/sign-up")1
+                                        mvc.pattern(HttpMethod.POST, "/api/admin/refresh-token"), (new AntPathRequestMatcher("/v3/**")),
+                                        (new AntPathRequestMatcher("/swagger-ui/**")),new AntPathRequestMatcher("/swagger-ui.html","GET")
+//                                        mvc.pattern(HttpMethod.POST, "/api/sign-up")1p_user
                                 ).permitAll()
                                 .anyRequest().permitAll()
                 ) //사용 권한 체크
@@ -39,7 +41,8 @@ public class SecurityConfiguration {
                 .exceptionHandling(except -> {
                     except.accessDeniedHandler(new CustomAccessDeniedHandler());
                     except.authenticationEntryPoint(new MyAuthenticationEntryPoint());
-                }).addFilterBefore(new JwtAuthFilter(jwtTokenProvider, redis), UsernamePasswordAuthenticationFilter.class);
+                });
+//        .addFilterBefore(new JwtAuthFilter(jwtTokenProvider, redis), UsernamePasswordAuthenticationFilter.class);
 
         return httpSecurity.build();
 

@@ -9,6 +9,7 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -95,10 +96,12 @@ public class JwtTokenProvider {
         UserEntity user = usrRep.findById(Long.valueOf(strIuser)).get();
 
         return MyUserInfos.builder()
-                .userId(user.getUserId())
+                .userId(id)
+                .email(user.getEmail())
                 .email(user.getEmail())
                 .pw(user.getPw())
                 .nickNm(user.getNickNm())
+                .roles(roles)
                 .build();
     }
 
@@ -125,6 +128,15 @@ public class JwtTokenProvider {
             e.printStackTrace();
         }
         return 0L;
+    }
+
+    //
+    public String resolveToken(HttpServletRequest req, String type){
+        log.info("JwtTokenProvider - HTTP 헤더에서 값 추출");
+        String headerAuthInfo = req.getHeader("authorization");
+        String keyword = String.format("%s",type);
+        return headerAuthInfo !=null && headerAuthInfo.startsWith(keyword) ?
+                headerAuthInfo.substring(type.length()).trim() : null;
     }
 
 }
