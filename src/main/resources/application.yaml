@@ -33,8 +33,9 @@ server:
       enabled: true
       force: true
 
-#springdoc:
-#  swagger-ui:
+springdoc:
+  default-consumes-media-type: application/json;charset=UTF-8
+  default-produces-media-type: application/json;charset=UTF-8
 #    path: /swagger-ui.html
 #    operationsSorter: method
 #    disable-swagger-default-url: true
@@ -59,6 +60,5 @@ server:
 #    disabled: true
 #  packages-to-scan: *
 ##  com.example.pensieve
-#  default-consumes-media-type: application/json;charset=UTF-8
-#  default-produces-media-type: application/json;charset=UTF-8
+
 

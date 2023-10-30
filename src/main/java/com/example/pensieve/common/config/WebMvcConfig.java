@@ -9,8 +9,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.resource.PathResourceResolver;
 
 import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
 @Slf4j
 @Configuration
@@ -25,11 +23,9 @@ public class WebMvcConfig implements WebMvcConfigurer {
                     @Override
                     protected Resource getResource(String resourcePath, Resource location) throws IOException {
                         Resource requestedResource = location.createRelative(resourcePath);
-                        // If we actually hit a file, serve that. This is stuff like .js and .css files.
                         if (requestedResource.exists() && requestedResource.isReadable()) {
                             return requestedResource;
                         }
-                        // Anything else returns the index.
                         return new ClassPathResource("/static/index.html");
                     }
                 });
