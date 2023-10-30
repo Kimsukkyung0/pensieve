@@ -21,6 +21,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     private final RedisService redis;
 
     //HTTP REQUEST -> resolveTOKEN/ doFILTERINTERNAL
+
     @Override
     protected void doFilterInternal(HttpServletRequest req, HttpServletResponse res, FilterChain fc) throws IOException, ServletException {
         String uri = req.getRequestURI();
