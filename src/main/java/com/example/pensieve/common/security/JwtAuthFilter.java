@@ -31,13 +31,17 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
         log.info("doFilterInternal - jwt토큰 유효성체크시작");
         if(token != null && JWTPROVIDER.isValidateToken(token, JWTPROVIDER.ACCESS_KEY)) {
-            //todo: logout 부분 추가
-            //if(ObjectUtils.isEmpty()){}
-            Authentication authentication = JWTPROVIDER.getAuthentication(token);
-            SecurityContextHolder.getContext().setAuthentication(authentication);
-            log.info("DoFilter - 토큰 유효성체크완료");
-
+            String isLogout = redis.getData(token);
+            //토큰이 비어있지 않고, 유효한 토큰이고, 로그아웃이 안된상태라면!
+            if(ObjectUtils.isEmpty(isLogout)) {
+                Authentication authentication = JWTPROVIDER.getAuthentication(token);
+                SecurityContextHolder.getContext().setAuthentication(authentication);
+                log.info("DoFilter - 토큰 유효성체크완료");
+            }
         }
+        fc.doFilter(req,res);
+
+
         }
 
 //        Boolean tmp = uri.indexOf("swagger") >= 0 || "/{context-path}/v2/api-docs".equals(uri) ||uri.contains("swagger");
