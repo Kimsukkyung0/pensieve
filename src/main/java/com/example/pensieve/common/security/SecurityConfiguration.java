@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.servlet.util.matcher.MvcRequestMatcher;
@@ -42,7 +43,7 @@ public class SecurityConfiguration {
                 .csrf(csrf -> csrf.disable()) //CSRF 보안이 필요 X, 쿠키와 세션을 이용해서 인증을 하고 있기 때문에 발생하는 일, https://kchanguk.tistory.com/197
                 .exceptionHandling(except -> {
                     except.accessDeniedHandler(new CustomAccessDeniedHandler());
-                    except.authenticationEntryPoint(new MyAuthenticationEntryPoint());
+//                    except.authenticationEntryPoint(new AuthenticationEntryPoint());
                 }) .addFilterBefore(new JwtAuthFilter(jwtTokenProvider, redis), UsernamePasswordAuthenticationFilter.class);
 
 
