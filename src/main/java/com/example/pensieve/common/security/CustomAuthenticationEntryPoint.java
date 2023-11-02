@@ -17,7 +17,7 @@ import java.io.IOException;
 public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
     @Override
-    public void commence(HttpServletRequest req, HttpServletResponse res, AuthenticationException authException) throws IOException, ServletException {
+    public void commence(HttpServletRequest req, HttpServletResponse res, AuthenticationException authException) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
         log.info("[commence] 인증 실패로 response.sendError 발생");
 

@@ -26,7 +26,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest req, HttpServletResponse res, FilterChain fc) throws IOException, ServletException {
         String uri = req.getRequestURI();
         //요청 uri가 swagger 나 api-docs 를 포함한다면 토큰 추츨하기
-        if (uri.contains("/api-docs") ||uri.contains("swagger")){
+        if (uri.contains("/api")){
         String token = JWTPROVIDER.resolveToken(req,JWTPROVIDER.TOKEN_TYPE);
         log.info("doFilterInternal - jwt토큰 추출중 token : {}",token);
 
