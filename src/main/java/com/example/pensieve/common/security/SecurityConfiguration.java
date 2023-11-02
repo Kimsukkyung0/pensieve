@@ -9,6 +9,8 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -32,12 +34,12 @@ public class SecurityConfiguration {
                                         mvc.pattern("/swagger-ui/**"),
                                         mvc.pattern("/swagger-ui/index.html"),
                                         (new AntPathRequestMatcher("/swagger-ui/**","GET")),new AntPathRequestMatcher("/swagger-ui.html","GET")
-//                                ).permitAll()
-//                                .requestMatchers(
-//                                        mvc.pattern("/index.html"),
-//                                        mvc.pattern("/swagger.html"), mvc.pattern("/swagger-ui/**"),
-//                                        mvc.pattern(HttpMethod.POST, "/api/admin/refresh-token")).hasAnyRole("USER")
-                        ).permitAll().anyRequest()
+                                ).permitAll()
+                                .requestMatchers(
+                                        mvc.pattern("/index.html"),
+                                        mvc.pattern("/swagger.html"), mvc.pattern("/swagger-ui/**"),
+                                        mvc.pattern(HttpMethod.POST, "/api/admin/refresh-token")).hasAnyRole("USER")
+                                .anyRequest().permitAll()
                 ) //사용 권한 체크
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) //세션 사용 X
                 .httpBasic(http -> http.disable()) //UI 있는 시큐리티 설정을 비활성화
