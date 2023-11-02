@@ -1,11 +1,10 @@
 package com.example.pensieve.common.security;
 
-import com.example.pensieve.common.security.model.Response;
+import com.example.pensieve.common.security.model.MyUserInfos;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.AuthenticationException;
@@ -29,9 +28,6 @@ public class MyAuthenticationEntryPoint implements AuthenticationEntryPoint {
         res.setCharacterEncoding("utf-8");
         res.setStatus(HttpStatus.UNAUTHORIZED.value());
         res.setContentType(MediaType.APPLICATION_JSON_VALUE);
-        res.getWriter().write(om.writeValueAsString(Response.builder()
-                .status(HttpStatus.FORBIDDEN.value())
-                .message(msg)
-                .build()));
+        res.getWriter().write(om.writeValueAsString(msg));
     }
         }

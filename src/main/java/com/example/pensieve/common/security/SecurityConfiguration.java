@@ -30,6 +30,8 @@ public class SecurityConfiguration {
                                         mvc.pattern("**exception**"),
                                         mvc.pattern("/swagger-ui/**"),
                                         mvc.pattern("/swagger-ui/index.html"),
+                                        mvc.pattern("/v3/api-docs/**"),
+                                        mvc.pattern("/sign/**"),
                                         (new AntPathRequestMatcher("/swagger-ui/**","GET")),new AntPathRequestMatcher("/swagger-ui.html","GET")
                                 ).permitAll()
 //                                .requestMatchers(
