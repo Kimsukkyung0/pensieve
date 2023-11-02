@@ -95,12 +95,12 @@ public class JwtTokenProvider {
         String strIuser = claims.getSubject();
         Long id = Long.valueOf(strIuser);
         List<String> roles = (List<String>)claims.get("roles");
+        log.info("roles : {roles}");
 
         UserEntity user = usrRep.findById(Long.valueOf(strIuser)).get();
 
         return MyUserInfos.builder()
                 .userId(id)
-                .email(user.getEmail())
                 .email(user.getEmail())
                 .pw(user.getPw())
                 .nickNm(user.getNickNm())

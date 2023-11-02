@@ -39,8 +39,6 @@ public class SignController {
     public void signIn(HttpServletRequest req, @RequestBody SignInDto dto){
         String ip = req.getRemoteAddr();
         log.info("[signIn] 로그인을 시도하고 있습니다. email: {}, pw: {}, ip: {}", dto.getEmail(), dto.getPw(), ip);
-
-
     }
 
 }

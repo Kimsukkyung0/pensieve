@@ -41,6 +41,15 @@ public class SwaggerTest {
     }
 
     @Test
+    @WithAnonymousUser
+    @DisplayName("익명유저성공기대")
+    public void swaggeranonymousUser() throws Exception{
+        this.mvc.perform(MockMvcRequestBuilders.get("/swagger-ui/index.html"))
+                .andExpect(status().isOk());
+    }
+
+
+    @Test
     @WithMockUser
     @DisplayName("mock유저")
     public void swaggerWithMockUser() throws Exception{

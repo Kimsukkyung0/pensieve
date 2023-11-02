@@ -2,6 +2,7 @@ package com.example.pensieve.common.security;
 
 import com.example.pensieve.common.config.RedisService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
@@ -16,6 +17,7 @@ import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 
 @Configuration
 @RequiredArgsConstructor
+@Slf4j
 public class SecurityConfiguration {
     private final JwtTokenProvider jwtTokenProvider;
     private final RedisService redis;
@@ -45,7 +47,7 @@ public class SecurityConfiguration {
                 })
                 .addFilterBefore(new JwtAuthFilter(jwtTokenProvider, redis), UsernamePasswordAuthenticationFilter.class);
 
-
+        log.info("securityConfig 통과");
         return httpSecurity.build();
 
     }
