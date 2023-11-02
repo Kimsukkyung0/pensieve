@@ -25,18 +25,19 @@ public class SecurityConfiguration {
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity, MvcRequestMatcher.Builder mvc) throws Exception{
         httpSecurity.authorizeHttpRequests(authz ->
                         authz.requestMatchers(
-                                        mvc.pattern("/"), mvc.pattern("/static/**")
-//                                        mvc.pattern("/api/**"),mvc.pattern("/**"),
-//                                        mvc.pattern("**exception**"),
-//                                        mvc.pattern(HttpMethod.POST, "/api/refresh-token"),
-//                                         (new AntPathRequestMatcher("/v3/**")),
-//                                        (new AntPathRequestMatcher("/swagger-ui/**","GET")),new AntPathRequestMatcher("/swagger-ui.html","GET")
+                                        mvc.pattern("/"), mvc.pattern("/static/**"),
+                                        mvc.pattern("/api/**"),mvc.pattern("/**"),
+                                        mvc.pattern("**exception**"),
+                                        mvc.pattern(HttpMethod.POST, "/api/refresh-token"),
+                                        mvc.pattern("/swagger-ui/**"),
+                                        mvc.pattern("/swagger-ui/index.html"),
+                                        (new AntPathRequestMatcher("/swagger-ui/**","GET")),new AntPathRequestMatcher("/swagger-ui.html","GET")
 //                                ).permitAll()
 //                                .requestMatchers(
 //                                        mvc.pattern("/index.html"),
 //                                        mvc.pattern("/swagger.html"), mvc.pattern("/swagger-ui/**"),
 //                                        mvc.pattern(HttpMethod.POST, "/api/admin/refresh-token")).hasAnyRole("USER")
-                        ).permitAll()
+                        ).permitAll().anyRequest()
                 ) //사용 권한 체크
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) //세션 사용 X
                 .httpBasic(http -> http.disable()) //UI 있는 시큐리티 설정을 비활성화
