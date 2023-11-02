@@ -1,6 +1,7 @@
 package com.example.pensieve.common.entity;
 
 
+import com.example.pensieve.common.security.model.RoleType;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -52,5 +53,12 @@ public class UserEntity extends BaseEntity{
     @ColumnDefault(value = "0")
     private int outYn;
     //탈퇴여부
+
+    @JsonIgnore
+    @Column(length = 10, nullable = false)
+    @Enumerated(EnumType.STRING)
+    @ColumnDefault(value = "'USR'")
+    private RoleType roleType;
+
 
 }
