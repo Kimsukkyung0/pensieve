@@ -24,8 +24,8 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest req, HttpServletResponse res, FilterChain fc) throws IOException, ServletException {
-        String uri = req.getRequestURI();
-        if (uri.contains("/sign-up")){
+//        String uri = req.getRequestURI();
+//        if (uri.contains("/sign-up")){
         String token = JWTPROVIDER.resolveToken(req,JWTPROVIDER.TOKEN_TYPE);
         log.info("doFilterInternal - jwt토큰 추출중 token : {}",token);
 
@@ -40,8 +40,6 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             }
         }
         fc.doFilter(req,res);
-
-
         }
 
 //        Boolean tmp = uri.indexOf("swagger") >= 0 || "/{context-path}/v2/api-docs".equals(uri) ||uri.contains("swagger");
@@ -50,4 +48,3 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 //
 //        or uri.contains("swagger")||uric.contains("/v2/api/docs")
     }
-}

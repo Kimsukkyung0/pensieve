@@ -21,11 +21,11 @@ import org.springframework.context.annotation.Configuration;
         scheme = "Bearer"
 )
 public class SwaggerConfig {
-//        @Bean
-//        public OpenAPI api(){
-//            Info info = new Info().title("swagg test").version("v3 swagger").description("test");
-//            return new OpenAPI().components(new Components()).info(info);
-//        }
+        @Bean
+        public OpenAPI api(){
+            Info info = new Info().title("PENSIEVE(가제)").version("0.0.1").description("아무튼 그런게있거든요");
+            return new OpenAPI().components(new Components()).info(info);
+        }
 
     //스웨거 fox(2)설정파일.
 //    @Bean
