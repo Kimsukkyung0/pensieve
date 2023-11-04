@@ -9,5 +9,6 @@ import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<UserEntity, Long> {
     @Query("SELECT n.email FROM UserEntity n WHERE n.email = :eaddress")
-    Optional<UserEntity> findEmailOverwrittenedYn(String eaddress);
+    Optional<UserEntity> findByEmail(String eaddress);
+
 }
