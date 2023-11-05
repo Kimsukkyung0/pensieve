@@ -38,7 +38,7 @@ public class SignController {
     @PostMapping("/in")
     public SignInResultDto signIn(HttpServletRequest req, @RequestBody SignInDto dto){
         String ip = req.getRemoteAddr();
-        log.info("[signIn] 로그인을 시도하고 있습니다. email: {}, pw: {}, ip: {}", dto.getEmail(), dto.getPw(), ip);
+        log.info("[signIn] 로그인을 시도하고 있습니다. email: {}, ip: {}", dto.getEmail(), ip);
         return SIGNSERVICE.signIn(dto,ip);
     }
 }

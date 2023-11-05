@@ -24,15 +24,15 @@ public class UserEntity extends BaseEntity{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(updatable = false, nullable = false)
     private Long userId;
-
-    public void setAdminId(Long adminId){
-        this.userId = userId;
-    }
-
-    @Check(constraints = "adminId>0")
-    public Long getUserId(){
-        return userId;
-    }
+//
+//    public void setAdminId(Long adminId){
+//        this.userId = userId;
+//    }
+//
+//    @Check(constraints = "adminId>0")
+//    public Long getUserId(){
+//        return userId;
+//    }
 
 
     @Column(nullable = false, length = 50, unique = true)

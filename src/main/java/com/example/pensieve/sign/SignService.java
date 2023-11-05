@@ -4,6 +4,7 @@ import com.example.pensieve.common.config.RedisService;
 import com.example.pensieve.common.entity.UserEntity;
 import com.example.pensieve.common.repository.UserRepository;
 import com.example.pensieve.common.security.JwtTokenProvider;
+import com.example.pensieve.common.security.model.RoleType;
 import com.example.pensieve.common.utils.ResultUtils;
 import com.example.pensieve.sign.model.SignInDto;
 import com.example.pensieve.sign.model.SignInResultDto;
@@ -40,8 +41,9 @@ public class SignService {
                         .email(dto.getEmail())
                         .pw(PW_ENCODER.encode(dto.getPw()))
                         .nickNm(dto.getNickNm())
+                        .roleType(RoleType.USR)
                         .build());
-                log.info("[signin] 정상 처리 완료");
+                log.info("[signup] 정상 처리 완료");
                 ResultUtils.setSuccessResult(result);
                 return result; }
 
@@ -56,16 +58,16 @@ public class SignService {
             throw new RuntimeException("[login] 비밀번호가 일치하지 않습니다");
         }
 
-
-        log.info("[login] {}유저에 대한 access,refresh token 객체 생성",optUsr.get().getEmail());
         UserEntity user = optUsr.get();
-        String accessToken = JWT_PROVIDER.generateJwtToken(user.getUserId().toString(),
+        String loginUserEmail = user.getEmail();
+        log.info("[login] {}유저에 대한 access,refresh token 객체 생성",loginUserEmail);
+        String accessToken = JWT_PROVIDER.generateJwtToken(String.valueOf(user.getUserId()),
                 Collections.singletonList(user.getRoleType().getCode()), JWT_PROVIDER.ACCESS_TOKEN_VALID_MS, JWT_PROVIDER.ACCESS_KEY);
         //jwt토큰을 형성하는 과정에서 roles가 우선 리스트 타입이므로 collection, singletonlist로 변환하여 값을 넘겨줌.
         //valid micro second 및 access key는 JWT provider의 맴버필드에서 가져와사용.
-        String refreshToken = JWT_PROVIDER.generateJwtToken(user.getUserId().toString(),
+        String refreshToken = JWT_PROVIDER.generateJwtToken(String.valueOf(user.getUserId()),
                 Collections.singletonList(user.getRoleType().getCode()), JWT_PROVIDER.REFRESH_TOKEN_VALID_MS, JWT_PROVIDER.REFRESH_KEY);
-        log.info("{}유저에 대한 access,refresh token 생성완료 ",optUsr.get().getEmail());
+        log.info("{}유저에 대한 access,refresh token 생성완료 ",loginUserEmail);
 
         log.info("[login] {} redis key 생성중", dto.getEmail());
         String redisKey = String.format("c:RT(%s):%s:%s","server",user.getUserId(),ip);
