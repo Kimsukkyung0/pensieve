@@ -10,6 +10,8 @@ import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.Check;
 import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 
 @Entity
 @Table(name="post_box")
@@ -18,6 +20,8 @@ import org.hibernate.annotations.ColumnDefault;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper=false)
 @ToString(callSuper = true)
+@DynamicInsert
+@DynamicUpdate
 public class PostBoxEntity extends BaseEntity{
 
     @Id
@@ -41,17 +45,17 @@ public class PostBoxEntity extends BaseEntity{
     private UserEntity userEntity;
 
     @Column(nullable = false)
-    @ColumnDefault(value = "0")
+    @ColumnDefault("0")
     private Integer banYn;
     //삭제여부 : 0=삭제안됨 1=삭제됨
 
     @Column(nullable = false)
-    @ColumnDefault(value = "0")
+    @ColumnDefault("0")
     private Long hits;
     //조회수
 
     @Column(nullable = false)
-    @ColumnDefault(value = "0")
+    @ColumnDefault("0")
     private Long likes;
 
 
