@@ -29,20 +29,20 @@ public class JwtTokenProvider {
     public final long ACCESS_TOKEN_VALID_MS = 1000L *60 *30;//30분
     public final long REFRESH_TOKEN_VALID_MS = 1_296_000_000L; //15일 정도
     private final UserRepository usrRep;
-    private final ServiceAdminRepository adminRep;
+//    private final ServiceAdminRepository adminRep;
 
     public JwtTokenProvider(@Value("${springboot.jwt.access-secret}") String accessSecretKey
             , @Value("${springboot.jwt.refresh-secret}") String refreshSecretKey
             , @Value("${springboot.jwt.token-type}") String tokenType
-            , UserRepository usrRep , ServiceAdminRepository adminRep) {
-
+            , UserRepository usrRep ) {
+//        ServiceAdminRepository adminRep
         byte[] accessKeyBytes = Decoders.BASE64.decode(accessSecretKey);
         this.ACCESS_KEY = Keys.hmacShaKeyFor(accessKeyBytes);
         byte[] refreshKeyBytes = Decoders.BASE64.decode(refreshSecretKey);
         this.REFRESH_KEY = Keys.hmacShaKeyFor(refreshKeyBytes);
         this.TOKEN_TYPE = tokenType;
         this.usrRep = usrRep;
-        this.adminRep = adminRep;
+//        this.adminRep = adminRep;
     }
 
 
@@ -55,21 +55,31 @@ public class JwtTokenProvider {
     */
 
     public String generateJwtToken(String strIuserPk, List<String> roles, long token_valid_ms, Key key){
-        log.info("JwtTokenProvider - generateJwtToken: 토큰 생성 시작");
+        log.info("[jwt] JwtTokenProvider - generateJwtToken: 토큰 생성 시작");
         Date now = new Date();
         //jwts 클래스의 builder 메서드를 이용해 토큰 생성
+        //jwt api 0.11.5
         String token = Jwts.builder()
                 .setClaims(createClaim(strIuserPk,roles))
                 .setIssuedAt(now)
                 .setExpiration(new Date(now.getTime()+token_valid_ms))
                 .signWith(key).compact();
+
+        //jwt api 0.12.3
+//        String token = Jwts.builder()
+//                .claims(createClaim(strIuserPk,roles))
+//                .issuedAt(now)
+//                .expiration(new Date(now.getTime()+token_valid_ms))
+//                .signWith(key).compact();
         /*등록된 클레임 중에서는 iat, exp 두개를 저장,**
          **비공개클레임 중  key 값을 token에 담고있다.*/
-        log.info("JwtTokenProvider - generateJwtToken: 토큰 생성 완료");
+        log.info("[jwt]JwtTokenProvider - generateJwtToken: 토큰 생성 완료");
         return token;
     }
 
     private Claims createClaim(String strIuserPk, List<String> roles){
+        log.info("[jwt]createClaim");
+//        Claims claims = Jwts.claims().setSubject(strIuserPk);
         Claims claims = Jwts.claims().setSubject(strIuserPk);
         claims.put("roles",roles);
         return claims;
@@ -109,6 +119,13 @@ public class JwtTokenProvider {
         return Jwts.parserBuilder().setSigningKey(key)
                 .build().parseClaimsJws(token)
                 .getBody();
+
+
+        //JWT api 0.11.5
+//        return Jwts.parser().build().
+//                parserBuilder().setSigningKey(key)
+//                .build().parseClaimsJws(token)
+//                .getBody();
     }
 
     public boolean isValidateToken(String token, Key key) {
