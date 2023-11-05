@@ -1,6 +1,8 @@
 package com.example.pensieve.common.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -23,11 +25,13 @@ public class PostBoxEntity extends BaseEntity{
     @Column(updatable = false, nullable = false)
     private Long postId;
 
+    @JsonIgnore
     public void setPostId(Long postId){
         this.postId = postId;
     }
 
     @Check(constraints = "postId>0")
+    @JsonIgnore
     public Long getPostId(){
         return postId;
     }
@@ -52,6 +56,7 @@ public class PostBoxEntity extends BaseEntity{
 
 
     @Column(length = 100)
+    @NotNull
     private String ctnt;
 
 

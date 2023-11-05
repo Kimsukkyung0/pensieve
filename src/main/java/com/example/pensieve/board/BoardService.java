@@ -16,7 +16,7 @@ public class BoardService {
     private final PostBoxRepository postRep;
     private final UserRepository usrRep;
     public int insPost(BoardInsDto dto){
-        UserEntity userEntity = usrRep.findById(dto.getUserId()).get();
+        UserEntity userEntity = usrRep.getReferenceById(dto.getUserId());
         PostBoxEntity entity = PostBoxEntity.builder().userEntity(userEntity).ctnt(dto.getCtnt()).build();
         postRep.save(entity);
         return entity.getPostId().intValue();
