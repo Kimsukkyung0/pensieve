@@ -41,7 +41,7 @@ public class SignService {
                         .pw(PW_ENCODER.encode(dto.getPw()))
                         .nickNm(dto.getNickNm())
                         .build());
-                log.info("[getSignUpResult] 정상 처리 완료");
+                log.info("[signin] 정상 처리 완료");
                 ResultUtils.setSuccessResult(result);
                 return result; }
 
@@ -51,15 +51,13 @@ public class SignService {
     public SignInResultDto signIn(SignInDto dto, String ip){
         Optional<UserEntity> optUsr = userRepository.findByEmail(dto.getEmail());
         if(optUsr.isEmpty()){
-            throw new RuntimeException("존재하지 않는 이메일입니다");
+            throw new RuntimeException("[login] 존재하지 않는 이메일입니다");
         } else if (!PW_ENCODER.matches(dto.getPw(),optUsr.get().getPw())) {//이메일이 존재하고,
-            throw new RuntimeException("비밀번호가 일치하지 않습니다");
+            throw new RuntimeException("[login] 비밀번호가 일치하지 않습니다");
         }
 
 
-
-
-        log.info("{}유저에 대한 access,refresh token 객체 생성",optUsr.get().getEmail());
+        log.info("[login] {}유저에 대한 access,refresh token 객체 생성",optUsr.get().getEmail());
         UserEntity user = optUsr.get();
         String accessToken = JWT_PROVIDER.generateJwtToken(user.getUserId().toString(),
                 Collections.singletonList(user.getRoleType().getCode()), JWT_PROVIDER.ACCESS_TOKEN_VALID_MS, JWT_PROVIDER.ACCESS_KEY);
@@ -69,13 +67,29 @@ public class SignService {
                 Collections.singletonList(user.getRoleType().getCode()), JWT_PROVIDER.REFRESH_TOKEN_VALID_MS, JWT_PROVIDER.REFRESH_KEY);
         log.info("{}유저에 대한 access,refresh token 생성완료 ",optUsr.get().getEmail());
 
-        log.info("{} redis key 생성중", dto.getEmail());
-//        String redisKey = String.format("c:RT",);
+        log.info("[login] {} redis key 생성중", dto.getEmail());
+        String redisKey = String.format("c:RT(%s):%s:%s","server",user.getUserId(),ip);
+        log.info("[login] {} redis key 생성완료", dto.getEmail());
 
-        //TODO: redis 에 대한 이해가 지금 당장은 낮으니 작업안함. 11.4작업완료하기
+        if(redisService.getData(redisKey) != null){
+            log.info("[login] redis에 {}의 로그인 값이 존재합니다", user.getUserId());
+            redisService.deleteData(redisKey);
+        }
+
+        log.info("[login] redis 통신중..");
+        redisService.setData(redisKey,refreshToken);
+
+        SignInResultDto signInResult = SignInResultDto.builder()
+                .accessToken(accessToken)
+                .refreshToken(refreshToken)
+                .role(user.getRoleType().getCode())
+                .build();
 
 
-        return SignInResultDto.builder().build();
+        ResultUtils.setSuccessResult(signInResult);
+        log.info("[login] 로그인완료");
+
+        return signInResult;
     }
 }
 //인증neo4j pw : MlUm8DaSVbvcwFk3UYBz1YOBYS7tglSXHgP07WAvXlQ
