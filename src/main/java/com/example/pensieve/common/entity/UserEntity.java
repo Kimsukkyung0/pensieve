@@ -11,6 +11,8 @@ import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.Check;
 import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 
 @Entity
 @Table(name="p_user")
@@ -19,6 +21,7 @@ import org.hibernate.annotations.ColumnDefault;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper=false)
 @ToString(callSuper = true)
+@DynamicInsert
 public class UserEntity extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -51,13 +54,19 @@ public class UserEntity extends BaseEntity{
 
     @Column(nullable = false, length = 1)
     @ColumnDefault(value = "0")
-    private int outYn;
+    private Integer outYn;
     //탈퇴여부
+
+    @PrePersist
+    void defaultValues(){
+        this.outYn = this.outYn == null ? 0 : this.outYn;
+        this.roleType = this.roleType == null ? RoleType.USR : this.roleType;
+    }
 
     @JsonIgnore
     @Column(length = 10, nullable = false)
     @Enumerated(EnumType.STRING)
-    @ColumnDefault(value = "'USR'")
+//    @ColumnDefault(value = "'USR'")
     private RoleType roleType;
 
 
