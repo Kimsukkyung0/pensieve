@@ -3,14 +3,17 @@ package com.example.pensieve.common.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 @Entity
 @Table(name="likes", uniqueConstraints = {@UniqueConstraint(columnNames = {"user_id","post_id"})})
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
+@Builder
 public class LikeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

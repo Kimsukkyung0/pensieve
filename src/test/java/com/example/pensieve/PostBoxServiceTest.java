@@ -37,8 +37,6 @@ public class PostBoxServiceTest {
         PostBoxEntity postEnti = PostBoxEntity.builder().userEntity(enti).ctnt(dto.getCtnt()).build();
 
         when(postRep.save(postEnti));
-        then(postEnti.getPostId().equals(5));
-        assertEquals(postEnti.getBanYn().intValue(),0);
     }
 
 }

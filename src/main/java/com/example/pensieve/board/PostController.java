@@ -35,6 +35,11 @@ public class PostController {
         return service.delPost(postId);
     }
 
+    @PatchMapping("/like")
+    public int postLikeBtn(@RequestParam Long postId){
+        return service.postLikeBtn(postId);
+    }
+
     @GetMapping
     public PostDetailRes getPostDetail(){
         return service.getPostDetail();
