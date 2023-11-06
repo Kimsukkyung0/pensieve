@@ -51,17 +51,19 @@ public class PostBoxEntity extends BaseEntity{
     //삭제여부 : 0=삭제안됨 1=삭제됨
 
     @PrePersist
-    void banYnDefault(){
-        this.banYn = this.banYn==null ? '0' : this.banYn;
+    void defaultValues(){
+        this.banYn = (int) (this.banYn== null ? '0' : +1);
+        this.hits = (long) (this.hits==null ? '0' : +1);
+        this.likes = (long) (this.likes==null ? '0' : +1);
     }
 
     @Column(nullable = false)
-    @ColumnDefault("0")
+//    @ColumnDefault("0")
     private Long hits;
     //조회수
 
     @Column(nullable = false)
-    @ColumnDefault("0")
+//    @ColumnDefault("0")
     private Long likes;
 
 

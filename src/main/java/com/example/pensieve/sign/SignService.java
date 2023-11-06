@@ -41,7 +41,6 @@ public class SignService {
                         .email(dto.getEmail())
                         .pw(PW_ENCODER.encode(dto.getPw()))
                         .nickNm(dto.getNickNm())
-                        .roleType(RoleType.USR)
                         .build());
                 log.info("[signup] 정상 처리 완료");
                 ResultUtils.setSuccessResult(result);

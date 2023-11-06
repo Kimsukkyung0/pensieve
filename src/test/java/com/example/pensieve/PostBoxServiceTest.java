@@ -15,6 +15,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
+import static org.mockito.Mockito.when;
 
 
 @Slf4j
@@ -29,13 +30,15 @@ public class PostBoxServiceTest {
     @Test
     void insertTest(){
         //test Dto생성
-        BoardInsDto dto = BoardInsDto.builder().userId(2L).ctnt("test").build();
+        String testCtnt = "test";
+        BoardInsDto dto = BoardInsDto.builder().userId(2L).ctnt(testCtnt).build();
 
         UserEntity enti = userRep.getReferenceById(2L);
 
         PostBoxEntity postEnti = PostBoxEntity.builder().userEntity(enti).ctnt(dto.getCtnt()).build();
 
-        given(postRep.save(postEnti));
+        when(postRep.save(postEnti));
+        then(postEnti.getPostId().equals(5));
         assertEquals(postEnti.getBanYn().intValue(),0);
     }
 
