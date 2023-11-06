@@ -47,14 +47,14 @@ public class PostBoxEntity extends BaseEntity{
     @Column(nullable = false)
 //    ,columnDefinition = "Integer default 0")
 //    @ColumnDefault("0")
-    private Integer banYn;
-    //삭제여부 : 0=삭제안됨 1=삭제됨
+    private Character banYn;
+    //삭제여부 : N=삭제안됨 Y=삭제됨
 
     @PrePersist
     void defaultValues(){
-        this.banYn = (int) (this.banYn== null ? '0' : +1);
-        this.hits = (long) (this.hits==null ? '0' : +1);
-        this.likes = (long) (this.likes==null ? '0' : +1);
+        this.banYn = this.banYn== null ? 'N' : this.banYn;
+        this.hits = this.hits==null ? 0L : this.hits;
+        this.likes = this.likes==null ? 0L :this.likes;
     }
 
     @Column(nullable = false)
