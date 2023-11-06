@@ -29,25 +29,31 @@ public class PostBoxEntity extends BaseEntity{
     @Column(updatable = false, nullable = false)
     private Long postId;
 
-    @JsonIgnore
-    public void setPostId(Long postId){
-        this.postId = postId;
-    }
-
-    @Check(constraints = "postId>0")
-    @JsonIgnore
-    public Long getPostId(){
-        return postId;
-    }
+//    @JsonIgnore
+//    public void setPostId(Long postId){
+//        this.postId = postId;
+//    }
+//
+//    @Check(constraints = "postId>0")
+//    @JsonIgnore
+//    public Long getPostId(){
+//        return postId;
+//    }
 
     @ManyToOne
     @JoinColumn(name = "user_id")
     private UserEntity userEntity;
 
     @Column(nullable = false)
-    @ColumnDefault("0")
+//    ,columnDefinition = "Integer default 0")
+//    @ColumnDefault("0")
     private Integer banYn;
     //삭제여부 : 0=삭제안됨 1=삭제됨
+
+    @PrePersist
+    void banYnDefault(){
+        this.banYn = this.banYn==null ? '0' : this.banYn;
+    }
 
     @Column(nullable = false)
     @ColumnDefault("0")
