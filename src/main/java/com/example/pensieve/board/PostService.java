@@ -60,6 +60,7 @@ public class PostService {
         List<Character> list = new ArrayList<>();
         //Todo 초중종성 분해 후 리턴
         //Todo hits 올리면서 시간내(1분) 5회이상 발생시 막는 거 어떻게하지?
+        //https://needjarvis.tistory.com/644 여기참고/~
 
         //DONE hits 올리기
 
