@@ -16,6 +16,10 @@ import java.util.List;
 public class PostController {
 
     private final PostService service;
+
+    //Todo 좋아요 올리기
+    //Todo 신고하기
+
     @PostMapping
     public int insertPost(@RequestBody PostInsDto dto){
         if(dto!=null){

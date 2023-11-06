@@ -10,6 +10,9 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.text.DateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,17 +44,30 @@ public class PostService {
     public PostDetailRes getPostDetail(){
 
         PostBoxEntity post = postRep.getReferenceById(getRandomPostId());
+        post.setHits(post.getHits()+1);
+        postRep.save(post);
 //        List<Character> list = post.getCtnt();
         List<Character> list = new ArrayList<>();
         //Todo 초중종성 분해 후 리턴
         //Todo hits 올리기
         //Todo hits 올리면서 시간내(1분) 5회이상 발생시 막는 거 어떻게하지?
 
-        return PostDetailRes.builder().charList(list).likes(post.getLikes()).hits(post.getHits()).createdAt(post.getCreatedAt()).build();
+        LocalDate date = post.getCreatedAt().toLocalDate();
+        return PostDetailRes.builder()
+                .postId(post.getPostId())
+                .charList(list)
+                .likes(post.getLikes())
+                .hits(post.getHits())
+                .createdAt(date)
+                .build();
     }
 
     private Long getRandomPostId(){
-        //Todo 랜덤 postId리턴 .banYn N/
-        return 1L;
+        List<Long> list = postRep.findAllPostId();
+        log.info(list.toString());
+        int randomNum = (int)(Math.random()*list.size());
+        log.info("postId : {} ",list.get(randomNum));
+        return list.get(randomNum);
+        //Done 랜덤 postId리턴 .banYn N/
     }
 }
