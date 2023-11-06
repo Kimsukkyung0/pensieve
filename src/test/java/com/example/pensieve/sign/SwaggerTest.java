@@ -1,7 +1,7 @@
 package com.example.pensieve.sign;
 
 
-import com.example.pensieve.board.BoardService;
+import com.example.pensieve.board.PostService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +23,7 @@ public class SwaggerTest {
     private MockMvc mvc;
 
     @MockBean
-    private BoardService service;
+    private PostService service;
     @MockBean
     private SignService signsvc;
 

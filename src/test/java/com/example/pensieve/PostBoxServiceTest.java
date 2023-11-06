@@ -1,7 +1,7 @@
 package com.example.pensieve;
 
 
-import com.example.pensieve.board.model.BoardInsDto;
+import com.example.pensieve.board.model.PostInsDto;
 import com.example.pensieve.common.entity.PostBoxEntity;
 import com.example.pensieve.common.entity.UserEntity;
 import com.example.pensieve.common.repository.PostBoxRepository;
@@ -13,7 +13,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.when;
 
@@ -31,7 +30,7 @@ public class PostBoxServiceTest {
     void insertTest(){
         //test Dto생성
         String testCtnt = "test";
-        BoardInsDto dto = BoardInsDto.builder().userId(2L).ctnt(testCtnt).build();
+        PostInsDto dto = PostInsDto.builder().userId(2L).ctnt(testCtnt).build();
 
         UserEntity enti = userRep.getReferenceById(2L);
 

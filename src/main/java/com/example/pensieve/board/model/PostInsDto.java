@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @Builder
-public class BoardInsDto {
+public class PostInsDto {
     private Long userId;
     private String ctnt;
 }
