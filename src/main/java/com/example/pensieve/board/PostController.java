@@ -1,10 +1,13 @@
 package com.example.pensieve.board;
 
+import com.example.pensieve.board.model.PostDetailRes;
 import com.example.pensieve.board.model.PostInsDto;
 import com.example.pensieve.common.security.AuthenticationFacade;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @AllArgsConstructor
@@ -27,5 +30,11 @@ public class PostController {
     public int delPost(@RequestParam Long postId){
         return service.delPost(postId);
     }
+
+    @GetMapping
+    public PostDetailRes getPostDetail(){
+        return service.getPostDetail();
+    }
+
 
 }
