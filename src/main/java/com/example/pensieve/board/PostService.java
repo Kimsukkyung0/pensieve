@@ -30,7 +30,9 @@ public class PostService {
 
 
     public int insPost(PostInsDto dto){
-        UserEntity userEntity = usrRep.getReferenceById(dto.getUserId());
+//        UserEntity userEntity = usrRep.getReferenceById(dto.getUserId());
+        //1번 유저로 고정해서 ajax test
+        UserEntity userEntity = usrRep.getReferenceById(1L);
         PostBoxEntity entity = PostBoxEntity.builder().userEntity(userEntity).ctnt(dto.getCtnt()).build();
         postRep.save(entity);
         return entity.getPostId().intValue();
