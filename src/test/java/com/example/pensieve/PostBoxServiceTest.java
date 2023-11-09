@@ -39,4 +39,16 @@ public class PostBoxServiceTest {
         when(postRep.save(postEnti));
     }
 
+
+    @Test
+    void KoreanToUnicordTest(){
+        String testWord = "테스트 니?";
+        byte[] bytes = testWord.getBytes();
+        log.info("{}",bytes);
+//        String[][] resultList = new String[][]{};
+//        for(byte b : bytes){
+//            resultList.
+//        }
+//        log.info("{}");
+    }
 }
