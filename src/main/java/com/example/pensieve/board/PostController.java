@@ -12,13 +12,16 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 @Slf4j
-@RequestMapping("/post")
+@RequestMapping(value = "/post",
+        produces = "application/json",
+        method=RequestMethod.POST)
 public class PostController {
 
     private final PostService service;
 
     //Todo 좋아요 올리기
     //Todo 신고하기
+
 
     @PostMapping
     public int insertPost(@RequestBody PostInsDto dto){
@@ -29,6 +32,9 @@ public class PostController {
             return 0;
         }
     }
+
+//    @PostMapping("/rmd")
+//    public
 
     @PatchMapping
     public int delPost(@RequestParam Long postId){
