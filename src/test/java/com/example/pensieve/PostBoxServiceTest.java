@@ -12,6 +12,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.text.Normalizer;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.when;
@@ -41,14 +43,25 @@ public class PostBoxServiceTest {
 
 
     @Test
-    void KoreanToUnicordTest(){
+    void KoreanToUnicordTest() {
         String testWord = "테스트 니?";
         byte[] bytes = testWord.getBytes();
-        log.info("{}",bytes);
+        log.info("{}", bytes);
 //        String[][] resultList = new String[][]{};
 //        for(byte b : bytes){
 //            resultList.
 //        }
 //        log.info("{}");
+
+//        String testWord2 = "이건 어떨까!";
+        log.info("{}", testWord);
+        for (int i = 0; i < testWord.length(); i++) {
+            String tmp = String.format("U+%04X ", testWord.codePointAt(i));
+            log.info(tmp);
+
+        }
+        String nfc = Normalizer.normalize(testWord, Normalizer.Form.NFC);
+        log.info(nfc);
+
     }
 }
