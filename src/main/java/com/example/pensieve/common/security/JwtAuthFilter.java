@@ -26,6 +26,12 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest req, HttpServletResponse res, FilterChain fc) throws IOException, ServletException {
 //        String uri = req.getRequestURI();
 //        if (uri.contains("/sign-up")){
+
+        res.setHeader("Access-Control-Allow-Origin", "/**");     //허용할 Origin(요청 url) : "*" 의 경우 모두 허용
+        res.setHeader("Access-Control-Allow-Methods", "POST, GET, DELETE, PUT");     //허용할 request http METHOD : POST, GET, DELETE, PUT
+        res.setHeader("Access-Control-Max-Age", "3600");     //브라우저 캐시 시간(단위: 초) : "3600" 이면 최소 1시간 안에는 서버로 재요청 되지 않음
+        res.setHeader("Access-Control-Allow-Headers", "X-Requested-With");
+
         String token = JWTPROVIDER.resolveToken(req,JWTPROVIDER.TOKEN_TYPE);
         log.info("doFilterInternal - jwt토큰 추출중 token : {}",token);
 

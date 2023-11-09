@@ -35,8 +35,8 @@ public class WebMvcConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-                .allowedOrigins("http://localhost:8085", "http://127.0.0.1:5500") // 허용할 출처
-                .allowedMethods("GET", "POST") // 허용할 HTTP method
+                .allowedOrigins("http://localhost:8085/post", "http://127.0.0.1:5500") // 허용할 출처
+                .allowedMethods("GET", "POST","PATCH") // 허용할 HTTP method
 //                .allowCredentials(true) // 쿠키 인증 요청 허용
                 .maxAge(3000) ;// 원하는 시간만큼 pre-flight 리퀘스트를 캐싱
     }
