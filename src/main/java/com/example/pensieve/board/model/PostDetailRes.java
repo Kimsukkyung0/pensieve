@@ -15,10 +15,18 @@ public class PostDetailRes {
 //    private Long likes;
 //    private LocalDate createdAt;
 
+    //test1
     private Long postId;
     private List<List<String>> list;
     private Long hits;
     private Long likes;
     private LocalDate createdAt;
+
+    //test2
+//    private Long postId;
+//    private List<String> list;
+//    private Long hits;
+//    private Long likes;
+//    private LocalDate createdAt;
 
 }

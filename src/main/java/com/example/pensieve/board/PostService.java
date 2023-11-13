@@ -39,6 +39,7 @@ public class PostService {
 //        return entity.getPostId().intValue();
 //    }
 
+//    //test1
     public PostDetailRes insPostTest(PostInsDto dto){
         UserEntity userEntity = usrRep.getReferenceById(1L);
         List<List<String>> ctnt = JamoUtils.split(dto.getCtnt());
@@ -51,6 +52,20 @@ public class PostService {
                 .createdAt(entity.getCreatedAt().toLocalDate())
                 .build();
     }
+
+//test2
+//    public PostDetailRes insPostTest(PostInsDto dto){
+//        UserEntity userEntity = usrRep.getReferenceById(1L);
+//        List<String> ctnt = JamoUtils.splitOne(dto.getCtnt());
+//        PostBoxEntity entity = PostBoxEntity.builder().userEntity(userEntity).ctnt(ctnt.toString()).build();
+//        postRep.save(entity);
+//
+//        return PostDetailRes.builder()
+//                .postId(entity.getPostId())
+//                .list(ctnt)
+//                .createdAt(entity.getCreatedAt().toLocalDate())
+//                .build();
+//    }
 
     //삭제처리 메서드
     public int delPost(Long postId){
