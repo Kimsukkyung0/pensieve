@@ -1,5 +1,7 @@
 package com.example.pensieve.common.utils;
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
@@ -12,11 +14,8 @@ import java.util.stream.Collectors;
 //https://cfdf.tistory.com/45 유니---코드
 //https://www.unicode.org/charts/PDF/U1100.pdf unicode 공식문서
 @Configuration
+@NoArgsConstructor
 public class JamoUtils {
-
-    private JamoUtils() {
-    }
-
 
     public static final String [] CHOSUNG = {"ㄱ", "ㄲ", "ㄴ", "ㄷ", "ㄸ", "ㄹ", "ㅁ", "ㅂ", "ㅃ",
             "ㅅ","ㅆ", "ㅇ", "ㅈ", "ㅉ", "ㅊ", "ㅋ", "ㅌ", "ㅍ", "ㅎ"};

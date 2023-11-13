@@ -9,6 +9,7 @@ import com.example.pensieve.common.repository.LikesRepository;
 import com.example.pensieve.common.repository.PostBoxRepository;
 import com.example.pensieve.common.repository.UserRepository;
 import com.example.pensieve.common.security.AuthenticationFacade;
+import com.example.pensieve.common.utils.JamoUtils;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -29,13 +30,26 @@ public class PostService {
     private final LikesRepository likeRep;
 
 
-    public int insPost(PostInsDto dto){
-//        UserEntity userEntity = usrRep.getReferenceById(dto.getUserId());
-        //1번 유저로 고정해서 ajax test
+//    public int insPost(PostInsDto dto){
+////        UserEntity userEntity = usrRep.getReferenceById(dto.getUserId());
+//        //1번 유저로 고정해서 ajax test
+//        UserEntity userEntity = usrRep.getReferenceById(1L);
+//        PostBoxEntity entity = PostBoxEntity.builder().userEntity(userEntity).ctnt(dto.getCtnt()).build();
+//        postRep.save(entity);
+//        return entity.getPostId().intValue();
+//    }
+
+    public PostDetailRes insPostTest(PostInsDto dto){
         UserEntity userEntity = usrRep.getReferenceById(1L);
-        PostBoxEntity entity = PostBoxEntity.builder().userEntity(userEntity).ctnt(dto.getCtnt()).build();
+        List<List<String>> ctnt = JamoUtils.split(dto.getCtnt());
+        PostBoxEntity entity = PostBoxEntity.builder().userEntity(userEntity).ctnt(ctnt.toString()).build();
         postRep.save(entity);
-        return entity.getPostId().intValue();
+
+        return PostDetailRes.builder()
+                .postId(entity.getPostId())
+                .list(ctnt)
+                .createdAt(entity.getCreatedAt().toLocalDate())
+                .build();
     }
 
     //삭제처리 메서드
@@ -69,7 +83,7 @@ public class PostService {
         LocalDate date = post.getCreatedAt().toLocalDate();
         return PostDetailRes.builder()
                 .postId(post.getPostId())
-                .charList(list)
+//                .charList(list)
                 .likes(post.getLikes())
                 .hits(post.getHits())
                 .createdAt(date)
