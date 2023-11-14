@@ -27,8 +27,8 @@ public class PostController {
     //Todo 좋아요 올리기
     //Todo 신고하기
 
-    //Todo 1 : 11.13 jamoutils 테스트 + res test
-    //Todo 2 :
+    //DONETodo 1 : 11.13 jamoutils 테스트 + res test
+    //TODO 금지어!!!!!!!!!!!!!!!!
 
 //    @PostMapping
 //    public int insertPost(@RequestBody PostInsDto dto){
@@ -54,7 +54,7 @@ public class PostController {
         }
     }
 
-    //TODO 금지어!!!!!!!!!!!!!!!!
+
     @GetMapping("/preset")
     @Operation(summary = "랜덤디자인" )
     public List<List<String>> getRandomDesign(@RequestBody PostInsDto dto){
