@@ -2,6 +2,7 @@ package com.example.pensieve.common.utils;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
@@ -15,6 +16,7 @@ import java.util.stream.Collectors;
 //https://www.unicode.org/charts/PDF/U1100.pdf unicode 공식문서
 @Configuration
 @NoArgsConstructor
+@Slf4j
 public class JamoUtils {
 
     public static final String [] CHOSUNG = {"ㄱ", "ㄲ", "ㄴ", "ㄷ", "ㄸ", "ㄹ", "ㅁ", "ㅂ", "ㅃ",
@@ -34,13 +36,19 @@ public class JamoUtils {
 
     public static List<String> splitOne(String target) {
         int codePoint = Character.codePointAt(target, 0);
-        if (codePoint >= 0xAC00 && codePoint <= 0xD79D) { //한글이면 ?
+        if (codePoint >= 0xAC00 && codePoint <= 0xD79D) { //한글이면 ? 분해하여 리스트로 반환
             int startValue = codePoint - 0xAC00;
             int jong = startValue % 28;
             int jung = ((startValue - jong) / 28) % 21;
             int cho = (((startValue - jong) / 28) - jung) / 21;
+            log.info("초성 : {}",cho);
+            log.info("중성 : {}",jung);
+            log.info("종성 : {}",jong);
             return List.of(CHOSUNG[cho], JUNGSUNG[jung], JONGSUNG[jong]);
         }
+//        else if(codePoint >= 0xAC00 && codePoint <= 0xD79D){//영문(대/소) , 특수문자U+0030 - U+0039
+//
+//        }
 
         return List.of(target, "", "");
     }

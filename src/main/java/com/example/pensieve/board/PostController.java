@@ -42,7 +42,7 @@ public class PostController {
 //    }
 
     @PostMapping
-    @Operation(summary = "게시물올리기" )
+    @Operation(summary = "게시물올리기(확정시)" )
     public PostDetailRes insertPost(@RequestBody PostInsDto dto){
         if(dto!=null){
 //            return service.insPost(dto);
@@ -50,7 +50,20 @@ public class PostController {
         }
         else{
             //값이 없을때 리턴
-           throw new RuntimeException("유효한 값이 아님");
+           throw new RuntimeException("값이 입력되지 않음");
+        }
+    }
+
+    @GetMapping("/preset")
+    @Operation(summary = "랜덤디자인" )
+    public List<List<String>> getRandomDesign(@RequestBody PostInsDto dto){
+        if(dto!=null){
+//            return service.insPost(dto);
+            return service.getRandomDesign(dto);
+        }
+        else{
+            //값이 없을때 리턴
+            throw new RuntimeException("값이 입력되지 않음");
         }
     }
 

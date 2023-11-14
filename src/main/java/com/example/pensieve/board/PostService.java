@@ -53,19 +53,12 @@ public class PostService {
                 .build();
     }
 
-//test2
-//    public PostDetailRes insPostTest(PostInsDto dto){
-//        UserEntity userEntity = usrRep.getReferenceById(1L);
-//        List<String> ctnt = JamoUtils.splitOne(dto.getCtnt());
-//        PostBoxEntity entity = PostBoxEntity.builder().userEntity(userEntity).ctnt(ctnt.toString()).build();
-//        postRep.save(entity);
-//
-//        return PostDetailRes.builder()
-//                .postId(entity.getPostId())
-//                .list(ctnt)
-//                .createdAt(entity.getCreatedAt().toLocalDate())
-//                .build();
-//    }
+    public List<List<String>> getRandomDesign(PostInsDto dto){
+        List<List<String>> ctnt = JamoUtils.split(dto.getCtnt());
+        //여기서 , 유니코드로 변환해서 repository로 통신해서 디자인을 반환하면됨
+        //근데 db구조 어떻게바꾸죸ㅋㅋ
+        return ctnt;
+    }
 
     //삭제처리 메서드
     public int delPost(Long postId){
