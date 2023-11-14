@@ -8,15 +8,12 @@ import com.example.pensieve.common.entity.UserEntity;
 import com.example.pensieve.common.repository.LikesRepository;
 import com.example.pensieve.common.repository.PostBoxRepository;
 import com.example.pensieve.common.repository.UserRepository;
-import com.example.pensieve.common.security.AuthenticationFacade;
-import com.example.pensieve.common.utils.JamoUtils;
+import com.example.pensieve.common.utils.SplitUtils;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.text.DateFormat;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -42,7 +39,7 @@ public class PostService {
 //    //test1
     public PostDetailRes insPostTest(PostInsDto dto){
         UserEntity userEntity = usrRep.getReferenceById(1L);
-        List<List<String>> ctnt = JamoUtils.split(dto.getCtnt());
+        List<List<String>> ctnt = SplitUtils.split(dto.getCtnt());
         PostBoxEntity entity = PostBoxEntity.builder().userEntity(userEntity).ctnt(ctnt.toString()).build();
         postRep.save(entity);
 
@@ -54,7 +51,7 @@ public class PostService {
     }
 
     public List<List<String>> getRandomDesign(PostInsDto dto){
-        List<List<String>> ctnt = JamoUtils.split(dto.getCtnt());
+        List<List<String>> ctnt = SplitUtils.split(dto.getCtnt());
         //여기서 , 유니코드로 변환해서 repository로 통신해서 디자인을 반환하면됨
         //근데 db구조 어떻게바꾸죸ㅋㅋ
         return ctnt;
@@ -82,7 +79,6 @@ public class PostService {
         postRep.save(post);
 //        List<Character> list = post.getCtnt();
         List<Character> list = new ArrayList<>();
-        //Todo 초중종성 분해 후 리턴
         //Todo hits 올리면서 시간내(1분) 5회이상 발생시 막는 거 어떻게하지?
         //https://needjarvis.tistory.com/644 여기참고/~
 

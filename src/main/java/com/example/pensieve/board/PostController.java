@@ -54,6 +54,7 @@ public class PostController {
         }
     }
 
+    //TODO 금지어!!!!!!!!!!!!!!!!
     @GetMapping("/preset")
     @Operation(summary = "랜덤디자인" )
     public List<List<String>> getRandomDesign(@RequestBody PostInsDto dto){

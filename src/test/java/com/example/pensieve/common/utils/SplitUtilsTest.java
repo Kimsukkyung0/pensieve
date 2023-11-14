@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import static org.junit.jupiter.api.Assertions.*;
 
 //@ExtendWith(JamoUtils.class)
-class JamoUtilsTest {
+class SplitUtilsTest {
 
     @Test
     void split() {
