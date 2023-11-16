@@ -10,9 +10,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class StyleCodeEntity {
     @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(nullable = false)
-    private String utf8Code;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(nullable = false,unique=true)
+    private String uniCode;
 
     @Column
     private String designUrl;
