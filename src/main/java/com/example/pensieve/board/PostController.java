@@ -71,11 +71,6 @@ public class PostController {
 //    @PostMapping("/rmd")
 //    public
 
-    @PatchMapping
-    public int delPost(@RequestParam Long postId){
-        return service.delPost(postId);
-    }
-
     @PatchMapping("/like")
     public int postLikeBtn(@RequestParam Long postId){
         return service.postLikeBtn(postId);

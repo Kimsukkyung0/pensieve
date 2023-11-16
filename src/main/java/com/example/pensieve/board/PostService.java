@@ -57,19 +57,6 @@ public class PostService {
         return ctnt;
     }
 
-    //삭제처리 메서드
-    public int delPost(Long postId){
-        PostBoxEntity pbEnti = postRep.getReferenceById(postId);
-        pbEnti.setBanYn('Y');
-        try{
-            postRep.save(pbEnti);
-            return 1;
-        } catch(RuntimeException e){
-            e.printStackTrace();
-            throw new RuntimeException("삭제처리 오류");
-        }
-    }
-
 
     //랜덤보기
     public PostDetailRes getPostDetail(){
@@ -79,7 +66,7 @@ public class PostService {
         postRep.save(post);
 //        List<Character> list = post.getCtnt();
         List<Character> list = new ArrayList<>();
-        //Todo hits 올리면서 시간내(1분) 5회이상 발생시 막는 거 어떻게하지?
+        //Todo hits 올리면서 시간내(1분) 5회이상 발생시 막는 거 어떻게하지?-프로느에서
         //https://needjarvis.tistory.com/644 여기참고/~
 
         //DONE hits 올리기
@@ -130,5 +117,9 @@ public class PostService {
         }
         return 0;
     }
+
+
+
+    //신고하기 메서드(관리자)
 
 }
