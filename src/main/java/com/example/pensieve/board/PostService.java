@@ -12,11 +12,13 @@ import com.example.pensieve.common.utils.SplitUtils;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @Slf4j
@@ -27,27 +29,31 @@ public class PostService {
     private final LikesRepository likeRep;
 
 
-//    public int insPost(PostInsDto dto){
-////        UserEntity userEntity = usrRep.getReferenceById(dto.getUserId());
-//        //1번 유저로 고정해서 ajax test
-//        UserEntity userEntity = usrRep.getReferenceById(1L);
-//        PostBoxEntity entity = PostBoxEntity.builder().userEntity(userEntity).ctnt(dto.getCtnt()).build();
-//        postRep.save(entity);
-//        return entity.getPostId().intValue();
-//    }
 
+    public PostDetailRes insPostTest(PostInsDto dto, MultipartFile finImg){
 //    //test1
-    public PostDetailRes insPostTest(PostInsDto dto){
-        UserEntity userEntity = usrRep.getReferenceById(1L);
-        List<List<String>> ctnt = SplitUtils.split(dto.getCtnt());
-        PostBoxEntity entity = PostBoxEntity.builder().userEntity(userEntity).ctnt(ctnt.toString()).build();
+        String rdNm = UUID.randomUUID().toString();
+        log.info(rdNm);
+
+
+
+        UserEntity userEntity = usrRep.getReferenceById(dto.getUserId());
+
+        PostBoxEntity entity = PostBoxEntity.builder()
+                .userEntity(userEntity)
+                .ctnt(dto.getCtnt())
+                .img(finImg.getName())
+                .build();
         postRep.save(entity);
 
         return PostDetailRes.builder()
                 .postId(entity.getPostId())
-                .list(ctnt)
+                .img(finImg.getOriginalFilename())
                 .createdAt(entity.getCreatedAt().toLocalDate())
                 .build();
+
+//        List<List<String>> ctnt = SplitUtils.split(dto.getCtnt());
+
     }
 
     public List<List<String>> getRandomDesign(PostInsDto dto){
@@ -120,6 +126,14 @@ public class PostService {
 
 
 
-    //신고하기 메서드(관리자)
+//    public int insPost(PostInsDto dto){
+////        UserEntity userEntity = usrRep.getReferenceById(dto.getUserId());
+//        //1번 유저로 고정해서 ajax test
+//        UserEntity userEntity = usrRep.getReferenceById(1L);
+//        PostBoxEntity entity = PostBoxEntity.builder().userEntity(userEntity).ctnt(dto.getCtnt()).build();
+//        postRep.save(entity);
+//        return entity.getPostId().intValue();
+//    }
+
 
 }

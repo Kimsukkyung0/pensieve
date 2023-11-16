@@ -8,4 +8,5 @@ import lombok.Data;
 public class PostInsDto {
     private Long userId;
     private String ctnt;
+    private String img;
 }

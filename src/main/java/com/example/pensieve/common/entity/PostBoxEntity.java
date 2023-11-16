@@ -29,17 +29,6 @@ public class PostBoxEntity extends BaseEntity{
     @Column(updatable = false, nullable = false)
     private Long postId;
 
-//    @JsonIgnore
-//    public void setPostId(Long postId){
-//        this.postId = postId;
-//    }
-//
-//    @Check(constraints = "postId>0")
-//    @JsonIgnore
-//    public Long getPostId(){
-//        return postId;
-//    }
-
     @ManyToOne
     @JoinColumn(name = "user_id")
     private UserEntity userEntity;
@@ -65,9 +54,13 @@ public class PostBoxEntity extends BaseEntity{
     private Long likes;
 
 
-    @Column(length = 100)
+    @Column//default 값 255로 설정
     @NotNull
     private String ctnt;
+
+    @Column(length = 100)
+    @NotNull
+    private String img;
 
 
 }

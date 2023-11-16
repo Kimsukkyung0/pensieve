@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,29 +25,18 @@ public class PostController {
 
     private final PostService service;
 
-    //Todo 좋아요 올리기
-    //Todo 신고하기
-
+//    DONE - Todo 좋아요 올리기
     //DONETodo 1 : 11.13 jamoutils 테스트 + res test
+    //Todo 신고하기
     //TODO 금지어!!!!!!!!!!!!!!!!
 
-//    @PostMapping
-//    public int insertPost(@RequestBody PostInsDto dto){
-//        if(dto!=null){
-////            return service.insPost(dto);
-//            return service.insPostTest(dto);
-//        }
-//        else{
-//            return 0;
-//        }
-//    }
 
     @PostMapping
     @Operation(summary = "게시물올리기(확정시)" )
-    public PostDetailRes insertPost(@RequestBody PostInsDto dto){
+    public PostDetailRes insertPost(@RequestBody PostInsDto dto, @RequestPart MultipartFile finImg){
         if(dto!=null){
 //            return service.insPost(dto);
-            return service.insPostTest(dto);
+            return service.insPostTest(dto,finImg);
         }
         else{
             //값이 없을때 리턴
@@ -68,9 +58,6 @@ public class PostController {
         }
     }
 
-//    @PostMapping("/rmd")
-//    public
-
     @PatchMapping("/like")
     public int postLikeBtn(@RequestParam Long postId){
         return service.postLikeBtn(postId);
@@ -81,5 +68,18 @@ public class PostController {
         return service.getPostDetail();
     }
 
+
+
+
+    //    @PostMapping
+//    public int insertPost(@RequestBody PostInsDto dto){
+//        if(dto!=null){
+////            return service.insPost(dto);
+//            return service.insPostTest(dto);
+//        }
+//        else{
+//            return 0;
+//        }
+//    }
 
 }
