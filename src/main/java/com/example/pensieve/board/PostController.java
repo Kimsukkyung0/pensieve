@@ -69,7 +69,7 @@ public class PostController {
 
     @PatchMapping("/report")
     public int postReport(@RequestParam Long postId){
-        return service.postRepost(postId);
+        return service.postReport(postId);
     }
 
 
