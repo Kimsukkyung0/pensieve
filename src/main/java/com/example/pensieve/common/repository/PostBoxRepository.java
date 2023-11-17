@@ -9,4 +9,5 @@ import java.util.List;
 public interface PostBoxRepository extends JpaRepository<PostBoxEntity, Long> {
     @Query("SELECT p.postId FROM PostBoxEntity p WHERE p.banYn = 'N'")
     List<Long> findAllPostId();
+    List<PostBoxEntity> findAllByReportCntIsGreaterThanEqual(Long reportCnt);
 }

@@ -5,6 +5,8 @@ import com.example.pensieve.common.repository.PostBoxRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @AllArgsConstructor
 public class AdminService {
@@ -20,5 +22,11 @@ public class AdminService {
             e.printStackTrace();
             throw new RuntimeException("삭제처리 오류");
         }
+    }
+
+    //Todo paging작업/정렬작업
+    public List<PostBoxEntity> getReportedPosts(){
+        List<PostBoxEntity> list = postRep.findAllByReportCntIsGreaterThanEqual(1L);
+        return list;
     }
 }
