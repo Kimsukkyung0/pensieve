@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 public class AdminService {
     private PostBoxRepository postRep;
 
-    public int delPost(Long postId){
+    public int banPost(Long postId){
         PostBoxEntity pbEnti = postRep.getReferenceById(postId);
         pbEnti.setBanYn('Y');
         try{

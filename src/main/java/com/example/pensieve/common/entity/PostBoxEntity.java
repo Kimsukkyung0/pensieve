@@ -44,6 +44,7 @@ public class PostBoxEntity extends BaseEntity{
         this.banYn = this.banYn== null ? 'N' : this.banYn;
         this.hits = this.hits==null ? 0L : this.hits;
         this.likes = this.likes==null ? 0L :this.likes;
+        this.reportCnt = this.reportCnt==null ? 0L :this.reportCnt;
     }
 
     @Column(nullable = false)
@@ -61,6 +62,10 @@ public class PostBoxEntity extends BaseEntity{
     @Column(length = 100)
     @NotNull
     private String img;
+
+    //신고
+    @Column(nullable = false)
+    private Long reportCnt;
 
 
 }

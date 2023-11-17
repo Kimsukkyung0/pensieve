@@ -125,6 +125,18 @@ public class PostService {
     }
 
 
+    public int postReport(Long postId){
+        PostBoxEntity pbEnti = postRep.getReferenceById(postId);
+        pbEnti.setReportCnt(pbEnti.getReportCnt()+1L);
+        try{
+            postRep.save(pbEnti);
+            return 1;
+        } catch(RuntimeException e){
+            e.printStackTrace();
+            throw new RuntimeException("신고가 정상적으로 실행되지 않았습니다.");
+        }
+    }
+
 
 //    public int insPost(PostInsDto dto){
 ////        UserEntity userEntity = usrRep.getReferenceById(dto.getUserId());

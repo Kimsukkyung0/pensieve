@@ -26,8 +26,7 @@ public class PostController {
     private final PostService service;
 
 //    DONE - Todo 좋아요 올리기
-    //DONETodo 1 : 11.13 jamoutils 테스트 + res test
-    //Todo 신고하기
+    //DONETodo 1 : 11.13 jamoutils 테스트 + res tes
     //TODO 금지어!!!!!!!!!!!!!!!!
 
 
@@ -43,7 +42,6 @@ public class PostController {
            throw new RuntimeException("값이 입력되지 않음");
         }
     }
-
 
     @GetMapping("/preset")
     @Operation(summary = "랜덤디자인" )
@@ -69,6 +67,10 @@ public class PostController {
     }
 
 
+    @PatchMapping("/report")
+    public int postReport(@RequestParam Long postId){
+        return service.postRepost(postId);
+    }
 
 
     //    @PostMapping
