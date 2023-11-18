@@ -6,6 +6,7 @@ import com.example.pensieve.common.security.AuthenticationFacade;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -30,12 +31,13 @@ public class PostController {
     //TODO 금지어!!!!!!!!!!!!!!!!
 
 
-    @PostMapping
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @Operation(summary = "게시물올리기(확정시)" )
-    public PostDetailRes insertPost(@RequestBody PostInsDto dto, @RequestPart MultipartFile finImg){
+    public PostDetailRes insertPost(@RequestPart PostInsDto dto, @RequestPart(required = false) MultipartFile finImg){
         if(dto!=null){
 //            return service.insPost(dto);
             return service.insPostTest(dto,finImg);
+            //1.유저아이디/내용 2.최종이미지
         }
         else{
             //값이 없을때 리턴
@@ -57,17 +59,20 @@ public class PostController {
     }
 
     @PatchMapping("/like")
+    @Operation(summary = "좋아요기능" )
     public int postLikeBtn(@RequestParam Long postId){
         return service.postLikeBtn(postId);
     }
 
     @GetMapping
+    @Operation(summary = "상세보기" )
     public PostDetailRes getPostDetail(){
         return service.getPostDetail();
     }
 
 
     @PatchMapping("/report")
+    @Operation(summary = "신고하기" )
     public int postReport(@RequestParam Long postId){
         return service.postReport(postId);
     }

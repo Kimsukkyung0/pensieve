@@ -11,6 +11,7 @@ import com.example.pensieve.common.repository.UserRepository;
 import com.example.pensieve.common.utils.SplitUtils;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -28,10 +29,13 @@ public class PostService {
     private final UserRepository usrRep;
     private final LikesRepository likeRep;
 
+    @Value("${file.dir}")
+    String fileDir;
 
 
     public PostDetailRes insPostTest(PostInsDto dto, MultipartFile finImg){
 //    //test1
+
         String rdNm = UUID.randomUUID().toString();
         log.info(rdNm);
 

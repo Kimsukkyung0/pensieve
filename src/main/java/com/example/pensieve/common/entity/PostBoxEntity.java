@@ -64,7 +64,8 @@ public class PostBoxEntity extends BaseEntity{
     private String img;
 
     //신고
-    @Column(nullable = false)
+    @Column
+    @NotNull
     private Long reportCnt;
 
 
