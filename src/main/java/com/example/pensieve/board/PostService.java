@@ -8,6 +8,7 @@ import com.example.pensieve.common.entity.UserEntity;
 import com.example.pensieve.common.repository.LikesRepository;
 import com.example.pensieve.common.repository.PostBoxRepository;
 import com.example.pensieve.common.repository.UserRepository;
+import com.example.pensieve.common.utils.FileUtils;
 import com.example.pensieve.common.utils.SplitUtils;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -15,6 +16,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,17 +33,27 @@ public class PostService {
     private final LikesRepository likeRep;
 
     @Value("${file.dir}")
-    String fileDir;
+    String FILE_DIR;
 
 
     public PostDetailRes insPostTest(PostInsDto dto, MultipartFile finImg){
 //    //test1
+        String fileDir = FileUtils.getAbsolutePath(FILE_DIR);
 
-        String rdNm = UUID.randomUUID().toString();
-        log.info(rdNm);
+        File tempDir = new File(fileDir, "/tmp");
+        if (!tempDir.exists()) {
+            tempDir.mkdirs();
+        }
+        String savedPicNm = FileUtils.makeRandomFileNm(finImg.getOriginalFilename());
+        File tempPic = new File(tempDir.getPath(), savedPicNm);
+        //임시경로
 
-
-
+        try {
+            finImg.transferTo(tempPic);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        
         UserEntity userEntity = usrRep.getReferenceById(dto.getUserId());
 
         PostBoxEntity entity = PostBoxEntity.builder()
@@ -55,8 +68,6 @@ public class PostService {
                 .img(finImg.getOriginalFilename())
                 .createdAt(entity.getCreatedAt().toLocalDate())
                 .build();
-
-//        List<List<String>> ctnt = SplitUtils.split(dto.getCtnt());
 
     }
 
