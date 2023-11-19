@@ -58,19 +58,16 @@ public class PostService {
             e.printStackTrace();
         }
 
-        String targetFolderNm = "/"+dto.getUserId().toString();
-        File targetPic = new File(fileDir,targetFolderNm);
+        String targetFolderNm = fileDir+"/"+dto.getUserId().toString();
+        File targetPic = new File(targetFolderNm);
 
         if (!targetPic.exists()) {
             targetPic.mkdirs();
+            log.info("{} : 최초사용유저-폴더생성",targetPic);
         }
 
-        try {
-            finImg.transferTo(targetPic);
-            log.info("{} : 사진 최종 폴더에 저장완료",targetPic);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        tempPic.renameTo(targetPic);
+        log.info("{} : 사진 최종 폴더에 저장완료",targetPic);
 
         UserEntity userEntity = usrRep.getReferenceById(dto.getUserId());
 
