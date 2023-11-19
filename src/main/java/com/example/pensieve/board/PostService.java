@@ -66,22 +66,28 @@ public class PostService {
             log.info("{} : 최초사용유저-폴더생성",targetPic);
         }
 
-        tempPic.renameTo(targetPic);
-        log.info("{} : 사진 최종 폴더에 저장완료",targetPic);
-
+        File targetFile = new File(targetFolderNm+"/"+savedPicNm);
+        try {
+            tempPic.renameTo(targetFile);
+            log.info("{} : 사진 최종 폴더에 저장완료", targetFile);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         UserEntity userEntity = usrRep.getReferenceById(dto.getUserId());
 
         PostBoxEntity entity = PostBoxEntity.builder()
                 .userEntity(userEntity)
                 .ctnt(dto.getCtnt())
-                .img(finImg.getName())
+                .img(targetFile.toString())
                 .build();
         postRep.save(entity);
 
         return PostDetailRes.builder()
                 .postId(entity.getPostId())
-                .img(finImg.getOriginalFilename())
+                .img(entity.getImg())
                 .createdAt(entity.getCreatedAt().toLocalDate())
+                .hits(entity.getHits())
+                .likes(entity.getLikes())
                 .build();
 
     }
