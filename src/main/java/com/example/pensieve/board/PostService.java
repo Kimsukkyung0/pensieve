@@ -9,6 +9,7 @@ import com.example.pensieve.common.repository.LikesRepository;
 import com.example.pensieve.common.repository.PostBoxRepository;
 import com.example.pensieve.common.repository.UserRepository;
 import com.example.pensieve.common.utils.FileUtils;
+import com.example.pensieve.common.utils.ResultUtils;
 import com.example.pensieve.common.utils.SplitUtils;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
@@ -49,15 +50,28 @@ public class PostService {
 
         String savedPicNm = FileUtils.makeRandomFileNm(finImg.getOriginalFilename());
         File tempPic = new File(tempDir.getPath(), savedPicNm);
-        //D:/
-        //임시경로
 
         try {
             finImg.transferTo(tempPic);
+            log.info("{} : 사진임시폴더에 저장완료",tempDir);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        
+
+        String targetFolderNm = "/"+dto.getUserId().toString();
+        File targetPic = new File(fileDir,targetFolderNm);
+
+        if (!targetPic.exists()) {
+            targetPic.mkdirs();
+        }
+
+        try {
+            finImg.transferTo(targetPic);
+            log.info("{} : 사진 최종 폴더에 저장완료",targetPic);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         UserEntity userEntity = usrRep.getReferenceById(dto.getUserId());
 
         PostBoxEntity entity = PostBoxEntity.builder()
