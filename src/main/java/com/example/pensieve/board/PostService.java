@@ -11,6 +11,7 @@ import com.example.pensieve.common.repository.UserRepository;
 import com.example.pensieve.common.utils.FileUtils;
 import com.example.pensieve.common.utils.SplitUtils;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -22,11 +23,10 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @Service
 @Slf4j
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class PostService {
     private final PostBoxRepository postRep;
     private final UserRepository usrRep;
@@ -35,17 +35,21 @@ public class PostService {
     @Value("${file.dir}")
     String FILE_DIR;
 
+    //Todo hits 올리면서 시간내(1분) 5회이상 발생시 막는 거 어떻게하지?-프로느에서
+    //https://needjarvis.tistory.com/644 여기참고/~
+    //Done 랜덤 postId리턴 .banYn N/
 
     public PostDetailRes insPostTest(PostInsDto dto, MultipartFile finImg){
-//    //test1
         String fileDir = FileUtils.getAbsolutePath(FILE_DIR);
 
         File tempDir = new File(fileDir, "/tmp");
         if (!tempDir.exists()) {
             tempDir.mkdirs();
         }
+
         String savedPicNm = FileUtils.makeRandomFileNm(finImg.getOriginalFilename());
         File tempPic = new File(tempDir.getPath(), savedPicNm);
+        //D:/
         //임시경로
 
         try {
@@ -87,8 +91,6 @@ public class PostService {
         postRep.save(post);
 //        List<Character> list = post.getCtnt();
         List<Character> list = new ArrayList<>();
-        //Todo hits 올리면서 시간내(1분) 5회이상 발생시 막는 거 어떻게하지?-프로느에서
-        //https://needjarvis.tistory.com/644 여기참고/~
 
         //DONE hits 올리기
 
@@ -109,7 +111,7 @@ public class PostService {
         int randomNum = (int)(Math.random()*list.size());
         log.info("postId : {} ",list.get(randomNum));
         return list.get(randomNum);
-        //Done 랜덤 postId리턴 .banYn N/
+
     }
 
     //좋아요메서드

@@ -10,7 +10,10 @@ spring:
     url: jdbc:postgresql://localhost:5432/databasetest
     username: postgres
     password: green502
-#  neo4j:
+  servlet:
+    multipart:
+      max-file-size: 10MB
+  #  neo4j:
 #    authentication:
 #      username: neo4j
 #      password: MlUm8DaSVbvcwFk3UYBz1YOBYS7tglSXHgP07WAvXlQ
@@ -34,6 +37,7 @@ server:
       charset: UTF-8
       enabled: true
       force: true
+
 
 springdoc:
   default-consumes-media-type: application/json;charset=UTF-8
