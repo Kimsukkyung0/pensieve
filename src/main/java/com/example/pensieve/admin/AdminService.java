@@ -14,8 +14,8 @@ public class AdminService {
 
     public int banPost(Long postId){
         PostBoxEntity pbEnti = postRep.getReferenceById(postId);
-        pbEnti.setBanYn('Y');
         try{
+            pbEnti.setBanYn('Y');
             postRep.save(pbEnti);
             return 1;
         } catch(RuntimeException e){
@@ -23,6 +23,19 @@ public class AdminService {
             throw new RuntimeException("삭제처리 오류");
         }
     }
+
+    public int banPostRev(Long postId){
+        PostBoxEntity pbEnti = postRep.getReferenceById(postId);
+        try{
+            pbEnti.setBanYn('N');
+            postRep.save(pbEnti);
+            return 1;
+        } catch(RuntimeException e){
+            e.printStackTrace();
+            throw new RuntimeException("삭제처리 오류");
+        }
+    }
+
 
     //Todo paging작업/정렬작업
     public List<PostBoxEntity> getReportedPosts(){

@@ -2,11 +2,9 @@ package com.example.pensieve.admin;
 
 
 import com.example.pensieve.common.entity.PostBoxEntity;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -17,13 +15,19 @@ public final class AdminController {
     private final AdminService service;
 
     @PatchMapping
+    @Operation(summary = "신고게시물 확인후 차단처리" )
     public int banPost(@RequestParam Long postId){
         return service.banPost(postId);
     }
 
-    //Todo 신고당한 게시물리스트
+    @PatchMapping("/{postId}")
+    @Operation(summary = "차단처리취소" )
+    public int banPostRevert(@RequestParam@PathVariable Long postId){
+        return service.banPostRev(postId);
+    }
 
     @GetMapping("/list")
+    @Operation(summary = "신고게시물 리스트" )
     public List<PostBoxEntity> getReportedPost(){
         return service.getReportedPosts();
     }
