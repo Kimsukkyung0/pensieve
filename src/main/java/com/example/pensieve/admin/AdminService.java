@@ -10,7 +10,7 @@ import java.util.List;
 @Service
 @AllArgsConstructor
 public class AdminService {
-    private PostBoxRepository postRep;
+    private final PostBoxRepository postRep;
 
     public int banPost(Long postId){
         PostBoxEntity pbEnti = postRep.getReferenceById(postId);
