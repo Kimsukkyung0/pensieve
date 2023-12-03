@@ -71,12 +71,13 @@ public class PostController {
     }
 
 
+    //TODO 차단한사람 목록저장하는 테이블(ENtity( 생성
     @PatchMapping("/report")
     @Operation(summary = "신고하기" )
     public int postReport(@RequestParam Long postId){
         return service.postReport(postId);
-    }
 
+    }
 
     //    @PostMapping
 //    public int insertPost(@RequestBody PostInsDto dto){

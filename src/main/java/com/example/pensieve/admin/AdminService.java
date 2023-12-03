@@ -39,7 +39,7 @@ public class AdminService {
 
     //Todo paging작업/정렬작업
     public List<PostBoxEntity> getReportedPosts(){
-        List<PostBoxEntity> list = postRep.findAllByReportCntIsGreaterThanEqual(1L);
+        List<PostBoxEntity> list = postRep.findPostsByReportButNotBanned(1L);
         return list;
     }
 }
