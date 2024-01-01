@@ -51,8 +51,6 @@ public class SignService {
                 log.info("[signup] 정상 처리 완료");
                 ResultUtils.setSuccessResult(result);
                 return result; }
-
-
     }
 
     public SignInResultDto signIn(SignInDto dto, String ip){

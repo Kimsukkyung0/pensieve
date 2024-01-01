@@ -5,6 +5,22 @@ springboot:
     header-scheme-name: authorization
     token-type: Bearer
 spring:
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: smk93021@gmail.com
+    password: pdnzwfnlsxajpwza
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+          connectiontimeout: 5000
+          timeout: 5000
+          writetimeout: 5000
+      auth-code-expiration-millis: 1800000
   datasource:
     driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://localhost:5432/databasetest
@@ -14,10 +30,10 @@ spring:
     multipart:
       max-file-size: 10MB
   #  neo4j:
-#    authentication:
-#      username: neo4j
-#      password: MlUm8DaSVbvcwFk3UYBz1YOBYS7tglSXHgP07WAvXlQ
-#      uri: bolt://neo4j+s://0630ee8d.databases.neo4j.io:7687
+  #    authentication:
+  #      username: neo4j
+  #      password: MlUm8DaSVbvcwFk3UYBz1YOBYS7tglSXHgP07WAvXlQ
+  #      uri: bolt://neo4j+s://0630ee8d.databases.neo4j.io:7687
   data:
     redis:
       host: 192.168.0.117
@@ -37,6 +53,7 @@ server:
       charset: UTF-8
       enabled: true
       force: true
+
 
 
 springdoc:
