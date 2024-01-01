@@ -29,12 +29,13 @@ public class JwtTokenProvider {
     public final long ACCESS_TOKEN_VALID_MS = 1000L *60 *30;//30분
     public final long REFRESH_TOKEN_VALID_MS = 1_296_000_000L; //15일 정도
     private final UserRepository usrRep;
+    private final ServiceAdminRepository adminRep;
 //    private final ServiceAdminRepository adminRep;
 
     public JwtTokenProvider(@Value("${springboot.jwt.access-secret}") String accessSecretKey
             , @Value("${springboot.jwt.refresh-secret}") String refreshSecretKey
             , @Value("${springboot.jwt.token-type}") String tokenType
-            , UserRepository usrRep ) {
+            , UserRepository usrRep,ServiceAdminRepository adminRep) {
 //        ServiceAdminRepository adminRep
         byte[] accessKeyBytes = Decoders.BASE64.decode(accessSecretKey);
         this.ACCESS_KEY = Keys.hmacShaKeyFor(accessKeyBytes);
@@ -42,7 +43,7 @@ public class JwtTokenProvider {
         this.REFRESH_KEY = Keys.hmacShaKeyFor(refreshKeyBytes);
         this.TOKEN_TYPE = tokenType;
         this.usrRep = usrRep;
-//        this.adminRep = adminRep;
+        this.adminRep = adminRep;
     }
 
 
@@ -85,6 +86,7 @@ public class JwtTokenProvider {
         return claims;
     }
 
+
     //Constructor of this class
 
     //--------------------------------------------------------------------------복붙
@@ -114,6 +116,8 @@ public class JwtTokenProvider {
                 .roles(roles)
                 .build();
     }
+
+
 
     private Claims getClaims(String token, Key key){
         return Jwts.parserBuilder().setSigningKey(key)
