@@ -6,7 +6,6 @@ import com.example.pensieve.common.repository.UserRepository;
 import com.example.pensieve.common.security.AuthenticationFacade;
 import com.example.pensieve.common.security.JwtTokenProvider;
 import com.example.pensieve.common.security.model.MyUserInfos;
-import com.example.pensieve.common.security.model.RoleType;
 import com.example.pensieve.common.utils.ResultUtils;
 import com.example.pensieve.sign.model.SignInDto;
 import com.example.pensieve.sign.model.SignInResultDto;
@@ -123,6 +122,7 @@ public class SignService {
 
         redisService.setDataExpire(accessToken, "logout", expiration);
     }
+
 
 }
 //인증neo4j pw : MlUm8DaSVbvcwFk3UYBz1YOBYS7tglSXHgP07WAvXlQ
