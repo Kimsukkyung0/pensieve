@@ -7,6 +7,10 @@ import com.example.pensieve.sign.model.SignUpResultDto;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseCookie;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -40,5 +44,18 @@ public class SignController {
         String ip = req.getRemoteAddr();
         log.info("[signIn] 로그인을 시도하고 있습니다. email: {}, ip: {}", dto.getEmail(), ip);
         return SIGNSERVICE.signIn(dto,ip);
+    }
+    @PostMapping("/logout")
+    public ResponseEntity<?> logout(HttpServletRequest req){
+        SIGNSERVICE.logout(req);
+        ResponseCookie responseCookie = ResponseCookie.from("refresh-token","")
+                .maxAge(0)
+                .path("/")
+                .build();
+
+        return ResponseEntity.status(HttpStatus.OK)
+                .header(HttpHeaders.SET_COOKIE,responseCookie.toString())
+                .build();
+
     }
 }

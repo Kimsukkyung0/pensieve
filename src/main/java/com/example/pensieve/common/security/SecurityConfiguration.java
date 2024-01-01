@@ -32,7 +32,8 @@ public class SecurityConfiguration {
                                         mvc.pattern("/swagger-ui/index.html"),
                                         mvc.pattern("/v3/api-docs/**"),
                                         mvc.pattern("/sign/**"),
-                                (new AntPathRequestMatcher("/post","post")), (new AntPathRequestMatcher("/swagger-ui/**","GET")),new AntPathRequestMatcher("/swagger-ui.html","GET")
+//                                (new AntPathRequestMatcher("/post","post")),
+                                        (new AntPathRequestMatcher("/swagger-ui/**","GET")),new AntPathRequestMatcher("/swagger-ui.html","GET")
                                 ).permitAll()
                                 .requestMatchers(mvc.pattern("/post/**")).hasAnyRole("ADMIN", "USR")
                                 .requestMatchers(mvc.pattern("/admin/**")).hasRole("ADMIN")

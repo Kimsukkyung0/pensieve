@@ -3,18 +3,23 @@ package com.example.pensieve.sign;
 import com.example.pensieve.common.config.RedisService;
 import com.example.pensieve.common.entity.UserEntity;
 import com.example.pensieve.common.repository.UserRepository;
+import com.example.pensieve.common.security.AuthenticationFacade;
 import com.example.pensieve.common.security.JwtTokenProvider;
+import com.example.pensieve.common.security.model.MyUserInfos;
 import com.example.pensieve.common.security.model.RoleType;
 import com.example.pensieve.common.utils.ResultUtils;
 import com.example.pensieve.sign.model.SignInDto;
 import com.example.pensieve.sign.model.SignInResultDto;
 import com.example.pensieve.sign.model.SignupDto;
 import com.example.pensieve.sign.model.SignUpResultDto;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Collections;
 import java.util.Optional;
 
@@ -26,6 +31,7 @@ public class SignService {
     private final RedisService redisService;
     private final UserRepository userRepository;
     private final JwtTokenProvider JWT_PROVIDER;
+    private final AuthenticationFacade authFacade;
 
 
     public SignUpResultDto signUp(SignupDto dto){
@@ -69,7 +75,12 @@ public class SignService {
         log.info("{}유저에 대한 access,refresh token 생성완료 ",loginUserEmail);
 
         log.info("[login] {} redis key 생성중", dto.getEmail());
-        String redisKey = String.format("c:RT(%s):%s:%s","server",user.getUserId(),ip);
+
+        //유저권한에따른 rediskey 생성
+        String redisKey = (user.getRoleType().getCode().equals("ADMIN"))?
+            String.format("c:RT(%s):ADMIN:%s:%s", "server", user.getUserId(), ip) :
+            String.format("c:RT(%s):%s:%s", "server", user.getUserId(), ip);
+
         log.info("[login] {} redis key 생성완료", dto.getEmail());
 
         if(redisService.getData(redisKey) != null){
@@ -92,6 +103,29 @@ public class SignService {
 
         return signInResult;
     }
+
+    public void logout(HttpServletRequest req){
+        String accessToken = JWT_PROVIDER.resolveToken(req,JWT_PROVIDER.TOKEN_TYPE);
+        Long userPk = authFacade.getLoginUserPk();
+        String ip = req.getRemoteAddr();
+        MyUserInfos userInfo = authFacade.getLoginUserInfo();
+        String redisKey = "ROLE_USER".equals(userInfo.getRoles().get(0)) ?
+                String.format("c:RT(%s):%s:%s", "Server", userPk, ip):
+                String.format("c:RT(%s):ADMIN:%s:%s", "Server", userPk, ip);
+
+        String refreshTokenInRedis = redisService.getData(redisKey);
+        if (refreshTokenInRedis != null) {
+            redisService.deleteData(redisKey);
+        }
+
+        long expiration = JWT_PROVIDER.getTokenExpirationTime(accessToken, JWT_PROVIDER.ACCESS_KEY) -
+                LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
+        log.info("expiration: {}", expiration);
+        log.info("localDateTime-getTime(): {}", LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant().toEpochMilli());
+
+        redisService.setDataExpire(accessToken, "logout", expiration);
+    }
+
 }
 //인증neo4j pw : MlUm8DaSVbvcwFk3UYBz1YOBYS7tglSXHgP07WAvXlQ
 //neo4j username : neo4j
