@@ -26,40 +26,4 @@ public class SwaggerConfig {
             Info info = new Info().title("PENSIEVE(가제)").version("0.0.1").description("아무튼 그런게있거든요");
             return new OpenAPI().components(new Components()).info(info);
         }
-
-    //스웨거 fox(2)설정파일.
-//    @Bean
-//    public Docket api2(){
-//        return new Docket(DocumentationType.OAS_30)
-//                .useDefaultResponseMessages(true)
-//                .apiInfo(apiInfo())
-//                .select()
-//                .apis(RequestHandlerSelectors.any())
-//                .paths(PathSelectors.ant("/**"))
-//                .build();
-//    }
-
     }
-//
-////    private ApiInfo apiInfo(){
-////        Contact ct = new Contact("m","www.naver.com","smk93021@gmail.com");
-////
-////        return new ApiInfo(
-////                "TEST API",
-////                "Some custom description of API.",
-////                "0.0.1",
-////                "Terms of service",
-////                ct, "License of API", "API license URL", Collections.emptyList());
-////    }
-//
-////    @Bean
-////    public Docket commonApi() {
-////        return new Docket(DocumentationType.SWAGGER_2)
-////                .groupName("example")
-////                .apiInfo(this.apiInfo())
-////                .select()
-////                .apis(RequestHandlerSelectors
-////                        .basePackage("com.example.demo.controller"))
-////                .paths(PathSelectors.ant("/**"))
-////                .build();
-////    }

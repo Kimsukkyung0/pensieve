@@ -20,7 +20,7 @@ spring:
 #      uri: bolt://neo4j+s://0630ee8d.databases.neo4j.io:7687
   data:
     redis:
-      host: localhost
+      host: 192.168.0.117
       port: 6379
   jpa:
     hibernate:
@@ -41,7 +41,8 @@ server:
 
 springdoc:
   default-consumes-media-type: application/json;charset=UTF-8
-  default-produces-media-type: application/json;charset=UTF-8
+
 #파일업로드 경로
 file:
-  dir: D:/pensieve/data
+  dir: D:/
+  imgPath: http://192.168.0.117:8085/pensieve/data

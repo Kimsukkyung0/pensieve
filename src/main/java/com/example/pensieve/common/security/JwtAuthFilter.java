@@ -31,6 +31,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         res.setHeader("Access-Control-Allow-Methods", "POST, GET, DELETE, PUT");     //허용할 request http METHOD : POST, GET, DELETE, PUT
         res.setHeader("Access-Control-Max-Age", "3600");     //브라우저 캐시 시간(단위: 초) : "3600" 이면 최소 1시간 안에는 서버로 재요청 되지 않음
         res.setHeader("Access-Control-Allow-Headers", "X-Requested-With");
+        res.setHeader("Access-Control-Allow-Headers", "Content-Type");
 
         String token = JWTPROVIDER.resolveToken(req,JWTPROVIDER.TOKEN_TYPE);
         log.info("doFilterInternal - jwt토큰 추출중 token : {}",token);
