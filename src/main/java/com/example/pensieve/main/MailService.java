@@ -1,7 +1,12 @@
 package com.example.pensieve.main;
 
+import com.example.pensieve.common.config.RedisService;
+import com.example.pensieve.common.entity.UserEntity;
+import com.example.pensieve.common.repository.UserRepository;
+import com.example.pensieve.main.model.EmailVerificationResult;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
+import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -19,6 +24,11 @@ import java.util.Random;
 @Transactional
 public class MailService {
     private final JavaMailSender emailSender;
+    private final RedisService redisService;
+    private final UserRepository userRep;
+    private final String AUTH_CODE_PREFIX = "PenSieveAutHCd4MailVerificatiOn";
+    private final long AUTH_CODE_EXPIRATION_MILLIES = 300000;
+//    인증코드 유효시간 : 5분
 
     public void sendEmail(String toEmail,
                           String title,
@@ -50,17 +60,19 @@ public class MailService {
         this.checkDuplicatedEmail(toEmail);
         String title = "Travel with me 이메일 인증 번호";
         String authCode = this.createCode();
+        log.info("authCode : {}",authCode);
+        log.info("toEmail (주소인듯) : {}",toEmail);
         this.sendEmail(toEmail, title, authCode);
         // 이메일 인증 요청 시 인증 번호 Redis에 저장 ( key = "AuthCode " + Email / value = AuthCode )
-        redisService.setValues(AUTH_CODE_PREFIX + toEmail,
-                authCode, Duration.ofMillis(this.authCodeExpirationMillis));
+        redisService.setMailVerificationData(AUTH_CODE_PREFIX + toEmail,
+                authCode, Duration.ofMillis(this.AUTH_CODE_EXPIRATION_MILLIES));
     }
 
-    private void checkDuplicatedEmail(String email) {
-        Optional<Member> member = memberRepository.findByEmail(email);
+    private void checkDuplicatedEmail(String email) throws Exception{
+        Optional<UserEntity> member = userRep.findByEmail(email);
         if (member.isPresent()) {
             log.debug("MemberServiceImpl.checkDuplicatedEmail exception occur email: {}", email);
-            throw new BusinessLogicException(ExceptionCode.MEMBER_EXISTS);
+            throw new Exception();
         }
     }
 
@@ -79,12 +91,14 @@ public class MailService {
         }
     }
 
-    public EmailVerificationResult verifiedCode(String email, String authCode) {
+//    public EmailVerificationResult verifiedCode(String email, String authCode) throws Exception{
+    public boolean verifiedCode(String email, String authCode) throws Exception{
         this.checkDuplicatedEmail(email);
-        String redisAuthCode = redisService.getValues(AUTH_CODE_PREFIX + email);
-        boolean authResult = redisService.checkExistsValue(redisAuthCode) && redisAuthCode.equals(authCode);
-
-        return EmailVerificationResult.of(authResult);
+        String redisAuthCode = redisService.getData(AUTH_CODE_PREFIX + email);
+        boolean authResult = redisService.checkExistValue(redisAuthCode) && redisAuthCode.equals(authCode);
+        //redis db에 key가 저장되어있고, key에 대한 value가 동일하다면 true
+//        return EmailVerificationResult.of(authResult);
+        return authResult;
     }
 }
 

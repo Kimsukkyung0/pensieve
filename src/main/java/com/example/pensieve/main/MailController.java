@@ -25,11 +25,13 @@ public class MailController {
     }
 
     @GetMapping("/emails/verifications")
-    public ResponseEntity verificationEmail(@RequestParam String email,
-                                            @RequestParam("code") String authCode) {
-        EmailVerificationResult response = mailService.verifiedCode(email, authCode);
+//    public ResponseEntity verificationEmail(@RequestParam String email,
+    public boolean verificationEmail(@RequestParam String email,
+                                            @RequestParam("code") String authCode) throws Exception{
+        boolean response = mailService.verifiedCode(email, authCode);
+//        EmailVerificationResult response = mailService.verifiedCode(email, authCode);
 
-        return new ResponseEntity<>(new SingleResponseDto<>(response), HttpStatus.OK);
+//        return new ResponseEntity<>(new SingleResponseDto<>(response), HttpStatus.OK);
+        return response;
     }
-
 }
